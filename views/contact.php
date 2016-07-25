@@ -34,10 +34,8 @@ switch($_POST['address']){
         			break;
         		default :
         			$activeAll = active; 
-        			
         	}
-	 
-	
+
 ?>
 
 <?php function maps($x,$y,$addName,$adderss){ ?> <!-- googleMap使用 -->
@@ -78,17 +76,11 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
     <title>Company-HTML Bootstrap theme</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />	
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+	<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+	<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />	
   </head>
   <body>
 	<header>		
@@ -103,22 +95,22 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar">租車</a></li>								
-								<li role="presentation"><a href="contact" class="active">服務據點</a></li>
-								<li role="presentation"><a href="blog">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact" class="active">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
 								<?php if ($sUserName == "Guest"): ?>
-								<li role="presentation"><a href="member">會員登入</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>
@@ -131,7 +123,7 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
 	<div id="breadcrumb">
 		<div class="container">	
 			<div class="breadcrumb">							
-				<li><a href="index.html">Home</a></li>
+				<li><a href="<?= $root ?>/Home/index">Home</a></li>
 				<li>服務據點</li>			
 			</div>		
 		</div>	
@@ -143,19 +135,19 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
             <div class="col-md-2" >
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="1">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="1">
                              <input class="btn btn-default <?php if($_POST['address']=='1')echo $activeAll ?>" type="submit" name="SB" value="台北三重站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="2">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="2">
                              <input class="btn btn-default <?php if($_POST['address']=='2')echo $activeAll ?>" type="submit" name="SB" value="台北車站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="3">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="3">
                              <input class="btn btn-default <?php if($_POST['address']=='3')echo $activeAll ?>" type="submit" name="SB" value="台中車站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="4">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="4">
                              <input class="btn btn-default <?php if($_POST['address']=='4')echo $activeAll ?>" type="submit" name="SB" value="台中河南站"></form>
             </div>
             <div class="col-md-2" >
@@ -165,19 +157,19 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
             <div class="col-md-2" >
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="5">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="5">
                              <input class="btn btn-default <?php if($_POST['address']=='5')echo $activeAll ?>" type="submit" name="SB" value="台中朝馬站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="6">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="6">
                              <input class="btn btn-default <?php if($_POST['address']=='6')echo $activeAll ?>" type="submit" name="SB" value="台南安平站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="7">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="7">
                              <input class="btn btn-default <?php if($_POST['address']=='7')echo $activeAll ?>" type="submit" name="SB" value="台南車站"></form>
             </div>
             <div class="col-md-2" >
-                 <form action="contact" method="post"><input type="hidden" name="address" value="8">
+                 <form action="<?= $root ?>/Home/contact" method="post"><input type="hidden" name="address" value="8">
                              <input class="btn btn-default <?php if($_POST['address']=='8')echo $activeAll ?>" type="submit" name="SB" value="高雄三多站"></form>
             </div>
             <div class="col-md-2" >
@@ -238,7 +230,6 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
 <!--22.9971367,120.21294979999993  台南車站-->
 <!--22.6352056,120.28738610000005  高雄三多站-->
 
-
 	<footer>
 		<div class="footer">
 			<div class="container">
@@ -271,16 +262,11 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
 	</footer>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>	
+	<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
-  </body>
-</html>e.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
-  </body>
+    <script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+	<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+    <script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+	<script src="<?= $jsRoot ?>/wow.min.js"></script>
+	<script src="<?= $jsRoot ?>/functions.js"></script>
 </html>

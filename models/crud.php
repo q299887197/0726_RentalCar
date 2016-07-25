@@ -9,16 +9,6 @@ class CRUD
   $db = new DB_con();
  }
 
- ///////////////////////////////////////////////////////////////////////////////////////////////
-
- //  public function read_login($sUserName,$sUserPassword) // 登入頁面 member.php 查詢帳號
- // {
- //   $sql = "SELECT * FROM sql_RentalCar where memberID = '$sUserName'";
-	//   $result = mysql_query($sql);
-	//   return $result;
- // }
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
  public function create_register($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
  {
   mysql_query( "INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
@@ -68,7 +58,6 @@ class CRUD
  
  ///////////////////////////////////////////////////////////////////////////////////////////////
 
- 
  
  public function delete_record($id)  //bolg.php 刪除訂單用的
  {

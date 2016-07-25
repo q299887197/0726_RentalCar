@@ -25,11 +25,11 @@ if(!isset($_COOKIE["userName"])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Company-HTML Bootstrap theme</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />	
+    <link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+	<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+	<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />	
 
   </head>
   <body onload="fInit()"> <!-- 一進入網站執行來處理由rentalCar_showCar.php 點擊車款傳過來的值 -->
@@ -73,7 +73,7 @@ if(!isset($_COOKIE["userName"])){
     		document.getElementById("carModel").add(option);	// 設定選項給第二個下拉式選單內容 id="carModel"
     		document.getElementById("carSpecies").value=[modle]; //設定選項給第一個下拉式選單
     
-    	document.getElementById("img").src = 'images/showCar/'+[modle]+[species]+'.jpg'; //將底下id=img的src位置更換成 點擊1.jpg ex: 11.jpg 21.jpg
+    	document.getElementById("img").src = '<?= $imgRoot ?>images/showCar/'+[modle]+[species]+'.jpg'; //將底下id=img的src位置更換成 點擊1.jpg ex: 11.jpg 21.jpg
     }
     
   }   
@@ -90,22 +90,22 @@ if(!isset($_COOKIE["userName"])){
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar" class="active">租車</a></li>								
-								<li role="presentation"><a href="contact">服務據點</a></li>
-								<li role="presentation"><a href="blog">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar" class="active">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
 								<?php if ($sUserName == "Guest"): ?>
-								<li role="presentation"><a href="member">會員登入</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>
@@ -119,7 +119,7 @@ if(!isset($_COOKIE["userName"])){
 	<div id="breadcrumb">
 		<div class="container">	
 			<div class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="<?= $root ?>/Home/index">Home</a></li>
 				<li>租車</li>
 				<li>我要租車</li>
 			</div>		
@@ -137,16 +137,16 @@ if(!isset($_COOKIE["userName"])){
                 <div class="row">
                 <div class="col-md-2">
                 <ul class="text-left">
-                <li><a class="btn btn-default " href="rentalCar">租車流程</a></li>
-                <li><a class="btn btn-default " href="rentalCar_notice">注意事項</a></li>
+                <li><a class="btn btn-default " href="<?= $root ?>/Home/rentalCar">租車流程</a></li>
+                <li><a class="btn btn-default " href="<?= $root ?>/Home/rentalCar_notice">注意事項</a></li>
                 <li><a class="btn btn-default " href="<?= $root ?>/Home/showAllCar">車款介紹</a></li>
-                <li><a class="btn btn-default active" href="rentalCar_iwantCar">我要租車</a></li>
+                <li><a class="btn btn-default active" href="<?= $root ?>/Home/rentalCar_iwantCar">我要租車</a></li>
                 </ul>
                 </div>
                 
                 <div class="col-md-10">
        
-                <form id="form1" name="form1" method="post" action="GOrentalCar">
+                <form id="form1" name="form1" method="post" action="<?= $root ?>/Home/GOrentalCar">
                   <table width="320" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
                     <tr>
                       <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">請輸入您租車的資料</font></td>
@@ -203,7 +203,7 @@ if(!isset($_COOKIE["userName"])){
                                 option.text = carGO[index][i];                      //新增一個option的text內容 等於 目前點擊的位子carGO[]內部印出
                                 option.value = carGO[index][i];                     //新增一個option的value內容 等於 目前點擊的位子carGO[]內部印出
                         		document.getElementById("carModel").add(option);	// 設定新選項給第二個下拉式選單內容 id="carModel"
-                        		document.getElementById("img").src = 'images/showCar/'+[index]+'1'+'.jpg'; //將底下id=img的src位置更換成 點擊1.jpg ex: 11.jpg 21.jpg
+                        		document.getElementById("img").src = '<?= $imgRoot ?>images/showCar/'+[index]+'1'+'.jpg'; //將底下id=img的src位置更換成 點擊1.jpg ex: 11.jpg 21.jpg
 
                         	    if([index]==0){
     	                            document.getElementById("img").src ='';
@@ -212,7 +212,7 @@ if(!isset($_COOKIE["userName"])){
                         }
                         function changeImg(index){ //設定第二個下拉式選單選擇內容
                             var carSpecies = document.getElementById("carSpecies").value; //新增一個option 抓取id="carSpecies" 的 value值
-                        	document.getElementById("img").src = 'images/showCar/'+[carSpecies]+[index+1]+'.jpg'; //將圖片跟換成  (value)+(目前點擊位子+1).jpg
+                        	document.getElementById("img").src = '<?= $imgRoot ?>images/showCar/'+[carSpecies]+[index+1]+'.jpg'; //將圖片跟換成  (value)+(目前點擊位子+1).jpg
                         }
                         </script>
                         
@@ -248,18 +248,15 @@ if(!isset($_COOKIE["userName"])){
                     </tr>
                   </table>
                 </form>
-                                            
                     <center>
                         <div class="recent-work-wrap">
-                            <img id="img" class="img-responsive" src="images/showCar/11.jpg">  <!-- 以上下拉式選單換圖的img id=""img -->
+                            <img id="img" class="img-responsive" src="<?= $imgRoot ?>images/showCar/11.jpg">  <!-- 以上下拉式選單換圖的img id=""img -->
                             <p id="demo"></p>
                         </div>
                     </center>
-
                 </div>
             </div>  
                     
-
                 </div>
             </div>
         </div>
@@ -298,12 +295,12 @@ if(!isset($_COOKIE["userName"])){
 	</footer>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>	
+	<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
+    <script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+	<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+    <script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+	<script src="<?= $jsRoot ?>/wow.min.js"></script>
+	<script src="<?= $jsRoot ?>/functions.js"></script>
   </body>
 </html>

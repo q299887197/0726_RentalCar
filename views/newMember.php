@@ -8,11 +8,11 @@
     <title>newMember</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />	
+		<link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+		<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+		<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />	
   </head>
   <body>
 	<header>
@@ -27,19 +27,19 @@
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar">租車</a></li>								
-								<li role="presentation"><a href="contact">服務據點</a></li>
-								<li role="presentation"><a href="blog">會員專區</a></li>
-								<li role="presentation"><a href="member">會員登入</a></li>							
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>							
 							</ul>
 						</div>
 					</div>						
@@ -51,8 +51,8 @@
 	<div id="breadcrumb">
 		<div class="container">	
 			<div class="breadcrumb">							
-				<li><a href="index">Home</a></li>
-				<li><a href="member">會員登入</a></li>
+				<li><a href="<?= $root ?>/Home/index">Home</a></li>
+				<li><a href="<?= $root ?>/Home/member">會員登入</a></li>
 				<li>註冊會員</li>			
 			</div>		
 		</div>	
@@ -62,48 +62,45 @@
 		<div class="container">
 			<center><h3>註冊會員</h3></center>
 			<hr>
-            <div>
-                <form id="form1" name="form1" method="post" action="register">
-                  <table width="370" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
-                    <tr>
-                      <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">請輸入您的資料</font></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" maxlength="20" value="<?= $data[1] ?>" placeholder="請輸入帳號" style= "color:#000000" /></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>
-                      <td valign="baseline"><input type="password" name="newMemberPW" id="newMemberPW" placeholder="請輸入密碼" style= "color:#000000"  /></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">密碼確認</font></td>
-                      <td valign="baseline"><input type="password" name="newMemberPW2" id="newMemberPW2" placeholder="請輸入密碼" style= "color:#000000" /></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">電話</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?= $data[2] ?>" placeholder="請輸入電話" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">信箱</font></td>
-                      <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?= $data[3] ?>" placeholder="請輸入信箱" style= "color:#000000" /></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">生日</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?= $data[4] ?>" placeholder="請輸入生日" maxlength="4" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/><P>例如: 生日為8月16日，請輸入0816</P></td>
-                    </tr>
-                    
-                    <tr>
-                      <td colspan="2" align="center" bgcolor="#77FF00">
-                   
-                      <input type="submit" name="register" id="register" value="註冊"   style=background-color:pink;color:#000000 />
-
-
-                      </td>
-                    </tr>
-                  </table>
-                </form>
-            </div>
+        <div>
+            <form id="form1" name="form1" method="post" action="<?= $root ?>/Home/register">
+              <table width="370" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
+                <tr>
+                  <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">請輸入您的資料</font></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
+                  <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" maxlength="20" value="<?= $data[1] ?>" placeholder="請輸入帳號" style= "color:#000000" /></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>
+                  <td valign="baseline"><input type="password" name="newMemberPW" id="newMemberPW" placeholder="請輸入密碼" style= "color:#000000"  /></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">密碼確認</font></td>
+                  <td valign="baseline"><input type="password" name="newMemberPW2" id="newMemberPW2" placeholder="請輸入密碼" style= "color:#000000" /></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">電話</font></td>
+                  <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?= $data[2] ?>" placeholder="請輸入電話" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">信箱</font></td>
+                  <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?= $data[3] ?>" placeholder="請輸入信箱" style= "color:#000000" /></td>
+                </tr>
+                <tr>
+                  <td width="80" align="center" valign="baseline"><font color="#000000">生日</font></td>
+                  <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?= $data[4] ?>" placeholder="請輸入生日" maxlength="4" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/><P>例如: 生日為8月16日，請輸入0816</P></td>
+                </tr>
+                
+                <tr>
+                  <td colspan="2" align="center" bgcolor="#77FF00">
+                  <input type="submit" name="register" id="register" value="註冊"   style=background-color:pink;color:#000000 />
+                  </td>
+                </tr>
+              </table>
+            </form>
+        </div>
 		</div>
 	</div>	
 	
@@ -138,7 +135,7 @@
 			</div>
 						
 			<div class="col-md-6">
-				<img src="images/4.jpg" class="img-responsive">
+				<img src="<?= $imgRoot ?>images/4.jpg" class="img-responsive">
 				<p>L</p>
 			</div>
 		</div>
@@ -176,14 +173,14 @@
 		</div>
 	</footer>
 	
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>	
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>	
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+		<script src="<?= $jsRoot ?>/wow.min.js"></script>
+		<script src="<?= $jsRoot ?>/functions.js"></script>
 	
   </body>
 </html>

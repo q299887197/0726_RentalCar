@@ -24,17 +24,12 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
     <title>Member</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />	
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+		<link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+		<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+		<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />	
+
   </head>
   <body>
 	<header>		
@@ -49,19 +44,19 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar">租車</a></li>								
-								<li role="presentation"><a href="contact">服務據點</a></li>
-								<li role="presentation"><a href="blog">會員專區</a></li>
-								<li role="presentation"><a href="member" class="active">會員登入</a></li>							
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member" class="active">會員登入</a></li>							
 							</ul>
 						</div>
 					</div>						
@@ -73,7 +68,7 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
 	<div id="breadcrumb">
 		<div class="container">	
 			<div class="breadcrumb">							
-				<li><a href="index">Home</a></li>
+				<li><a href="<?= $root ?>/Home/index">Home</a></li>
 				<li>會員登入</li>			
 			</div>		
 		</div>	
@@ -83,36 +78,34 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
 		<div class="container">
 			<center><h3>會員登入</h3></center>
 			<hr>
-            
-            <div>
-                
-                <form id="form1" name="form1" method="post" action="login">
-                  <table width="320" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
-                    <tr>
-                      <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">請輸入您的帳號密碼</font></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                      <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" value="<?= $data[1] ?>" style= "color:#000000" /></td>
-                    </tr>
-                    <tr>
-                      <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>
-                      <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" style= "color:#000000" /></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" align="center" bgcolor="#77FF00">
-  
-                      <input type="submit" name="btnOK" id="btnOK" value="登入"   style=background-color:pink;color:#000000 />
+        <div>
+          <form id="form1" name="form1" method="post" action="<?= $root ?>/Home/login">
+            <table width="320" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
+              <tr>
+                <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">請輸入您的帳號密碼</font></td>
+              </tr>
+              <tr>
+                <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
+                <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" value="<?= $data[1] ?>" style= "color:#000000" /></td>
+              </tr>
+              <tr>
+                <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>
+                <td valign="baseline"><input type="password" name="txtPassword" id="txtPassword" style= "color:#000000" /></td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center" bgcolor="#77FF00">
 
-                      <input type="submit" name="btnMember" id="btnMember" value=註冊 style=background-color:pink;color:#000000 />
-           
-                      </td>
-                    </tr>
-                  </table>
-                </form>
-            </div>
-		</div>
-	</div>	
+                <input type="submit" name="btnOK" id="btnOK" value="登入"   style=background-color:pink;color:#000000 />
+
+                <input type="submit" name="btnMember" id="btnMember" value=註冊 style=background-color:pink;color:#000000 />
+     
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+			</div>
+		</div>	
 	
 	<br>
 	<br>
@@ -145,7 +138,7 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
 			</div>
 						
 			<div class="col-md-6">
-				<img src="images/4.jpg" class="img-responsive">
+				<img src="<?= $imgRoot ?>images/4.jpg" class="img-responsive">
 				<p>L</p>
 			</div>
 		</div>
@@ -182,15 +175,13 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
 			</div>
 		</div>
 	</footer>
-	
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>	
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
-	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>	
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+		<script src="<?= $jsRoot ?>/wow.min.js"></script>
+		<script src="<?= $jsRoot ?>/functions.js"></script>
   </body>
 </html>

@@ -47,7 +47,7 @@ else{
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					

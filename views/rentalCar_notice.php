@@ -6,9 +6,7 @@ if (isset($_COOKIE["userName"])){
 else{ 
 	  $sUserName = "Guest";
 	 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,17 +17,12 @@ else{
     <title>Company-HTML Bootstrap theme</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />	
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+	<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+	<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+	<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />	
+
   </head>
   <body>
 	<header>		
@@ -44,22 +37,22 @@ else{
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar" class="active">租車</a></li>								
-								<li role="presentation"><a href="contact">服務據點</a></li>
-								<li role="presentation"><a href="blog">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar" class="active">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
 								<?php if ($sUserName == "Guest"): ?>
-								<li role="presentation"><a href="member">會員登入</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>
@@ -73,7 +66,7 @@ else{
 	<div id="breadcrumb">
 		<div class="container">	
 			<div class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="<?= $root ?>/Home/index">Home</a></li>
 				<li>rentalCar</li>
 			</div>		
 		</div>	
@@ -97,9 +90,6 @@ else{
                 </ul>
                 </div>
 
-
-
-
                  <div class="col-md-10">
                  
                  <table>
@@ -121,7 +111,7 @@ else{
 					      </td>
 					   </tr>
 					   <tr>
-					    	<td align="center" valign="top"><img src="images/rentalCar/carMoney.jpg" border="0"></td>
+					    	<td align="center" valign="top"><img src="<?= $imgRoot ?>images/rentalCar/carMoney.jpg" border="0"></td>
 					   </tr>
 
                  </table>
@@ -166,12 +156,12 @@ else{
 	</footer>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>	
+	<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>	
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
+    <script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+	<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+    <script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+	<script src="<?= $jsRoot ?>/wow.min.js"></script>
+	<script src="<?= $jsRoot ?>/functions.js"></script>
   </body>
 </html>

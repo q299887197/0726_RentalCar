@@ -26,11 +26,11 @@ if(!isset($_COOKIE["userName"])){
    <title>Company-HTML Bootstrap theme</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link href="css/prettyPhoto.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet" />		
+		<link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/font-awesome.min.css">
+		<link rel="stylesheet" href="<?= $cssRoot ?>/animate.css">
+		<link href="<?= $cssRoot ?>/prettyPhoto.css" rel="stylesheet">
+		<link href="<?= $cssRoot ?>/style.css" rel="stylesheet" />		
 
   </head>
   <body>
@@ -46,23 +46,23 @@ if(!isset($_COOKIE["userName"])){
 							<span class="icon-bar"></span>
 						</button>
 						<div class="navbar-brand">
-							<a href="index"><h1><span>德順</span>租車</h1></a>
+							<a href="<?= $root ?>/Home/index"><h1><span>德順</span>租車</h1></a>
 						</div>
 					</div>
 					
 					<div class="navbar-collapse collapse">							
 						<div class="menu">
 							<ul class="nav nav-tabs" role="tablist">
-								<li role="presentation"><a href="index">首頁</a></li>
-								<li role="presentation"><a href="about">關於我們</a></li>
-								<li role="presentation"><a href="rentalCar">租車</a></li>								
-								<li role="presentation"><a href="contact">服務據點</a></li>
-								<li role="presentation"><a href="blog" class="active">會員專區</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/index">首頁</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/about">關於我們</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
+								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/blog" class="active">會員專區</a></li>
 								
 								<?php if ($sUserName == "Guest"): ?>
-								<li role="presentation"><a href="member">會員登入</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else:  ?>
-								<li role="presentation"><a href="member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
 								<?php endif; ?>
 							</ul>
 						</div>
@@ -90,9 +90,9 @@ if(!isset($_COOKIE["userName"])){
             <div class="row">
                 <div class="col-md-2">
                 <ul class="text-left">
-                <li><a class="btn btn-default " href="blog">目前訂單</a></li>
-                <li><a class="btn btn-default active" href="blog_change">會員資料</a></li>
-                <li><a class="btn btn-default " href="blog_record">租車紀錄</a></li>
+                <li><a class="btn btn-default " href="<?= $root ?>/Home/blog">目前訂單</a></li>
+                <li><a class="btn btn-default active" href="<?= $root ?>/Home/blog_change">會員資料</a></li>
+                <li><a class="btn btn-default " href="<?= $root ?>/Home/blog_record">租車紀錄</a></li>
                 </ul>
                 </div>
 
@@ -101,7 +101,7 @@ if(!isset($_COOKIE["userName"])){
 
                 <div class="col-md-10">
 
-                <form id="form1" name="form1" method="post" action="updata_blog">
+                <form id="form1" name="form1" method="post" action="<?= $root ?>/Home/updata_blog">
                   <table width="320" border="1" align="center" cellpadding="5" cellspacing="0" bgcolor="#000000">
                     <tr>
                       <td colspan="2" align="center" bgcolor="#77FF00"><font color="#000000">會員資料</font></td>
@@ -147,9 +147,8 @@ if(!isset($_COOKIE["userName"])){
                   </table>
                 </form>
                 </div>
-            -
+            	<br>
             </div>
-
         </center>
     </section><!--/#blog-->
 	
@@ -184,15 +183,15 @@ if(!isset($_COOKIE["userName"])){
 		</div>
 	</footer>
 	
-   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="js/jquery-2.1.1.min.js"></script>
-	<script src="js/jquery.js"></script>	
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/jquery.isotope.min.js"></script>  
-	<script src="js/wow.min.js"></script>
-	<script src="js/functions.js"></script>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="<?= $jsRoot ?>/jquery-2.1.1.min.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.js"></script>	
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="<?= $jsRoot ?>/bootstrap.min.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.prettyPhoto.js"></script>
+		<script src="<?= $jsRoot ?>/jquery.isotope.min.js"></script>  
+		<script src="<?= $jsRoot ?>/wow.min.js"></script>
+		<script src="<?= $jsRoot ?>/functions.js"></script>
 	
   </body>
 </html>
