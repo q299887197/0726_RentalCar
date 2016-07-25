@@ -23,7 +23,7 @@ if(!isset($_COOKIE["userName"])){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Company-HTML Bootstrap theme</title>
+   <title>會員專區</title>
 
     <!-- Bootstrap -->
 		<link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">

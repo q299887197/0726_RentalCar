@@ -21,7 +21,7 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Member</title>
+    <title>會員登入</title>
 
     <!-- Bootstrap -->
 		<link href="<?= $cssRoot ?>/bootstrap.min.css" rel="stylesheet">

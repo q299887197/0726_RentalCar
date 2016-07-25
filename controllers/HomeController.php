@@ -95,12 +95,11 @@ class HomeController extends Controller {
                         break;
                       }
                        $GOrentalCar -> create_iwantCar($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel);
-                    		echo "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog_record'; </script>";
+                    		echo "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog'; </script>";
                 }
                 else 
                     echo "<script language='javascript'> alert('您輸入的時間有錯誤');</script>";
                     $this->view("rentalCar_iwantCar",$data);  //將寫過的資料保留存回登入頁
-                
             }
             else 
                 echo "<script language='javascript'> alert('請輸入完整資料');location.href='../Home/rentalCar_iwantCar'; </script>";
@@ -226,42 +225,38 @@ class HomeController extends Controller {
     $this->view("member");
     }
  
-    function login(){    //member 會員頁面 按確定動作
+    function login(){                                                                   //member 會員頁面 登入動作動作
     if (isset($_POST["btnOK"])) 
     {
-        $login = $this->model("login");
-        $data[1] = $sUserName = $_POST["txtUserName"];
-    	$sUserPassword = $_POST["txtPassword"];
-    
-    	if($sUserName != null && $sUserPassword != null){  // 帳號密碼不能為空直
-        	//讀取sql_RentalCar資料庫的memberID  , 搜尋條件為 $MemberID
-        	$result = $login -> member_login($sUserName);
-        	$row = @mysql_fetch_row($result); 
+        $login = $this->model("login");                                                 //指定models資料夾內的login.php
+        $data[1] = $sUserName = $_POST["txtUserName"];                                  //讀取輸入的帳號內容
+    	$sUserPassword = $_POST["txtPassword"];                                         //讀取輸入的密碼內容
+    	
+    	if($sUserName != null && $sUserPassword != null){                               // 帳號密碼不能為空直
+        	$result = $login -> member_login($sUserName);	            //讀取sql_RentalCar資料庫的memberID  , 搜尋條件為 $MemberID
+        	$row = @mysql_fetch_row($result);                                           // 將搜尋到的擺為陣列給$row
         	
-        	if($row[1] == $sUserName && $row[2] == $sUserPassword){
-        	    
-        		setcookie("userName", $sUserName, time()  +9900, "/");
+        	if($row[1] == $sUserName && $row[2] == $sUserPassword){                     // 比對帳號密碼是否相同
+        		setcookie("userName", $sUserName, time()  +9900, "/");                  // 正確給予相對應的cookie
         		if (isset($_COOKIE["lastPage"])){
-        			header(sprintf("Location: ../Home/%s", $_COOKIE["lastPage"]));   //抓到lastPage的cookie返回到指定位子
-        			setcookie("lastPage", "blog", time() - 3600,"/");                //清除返回bolg.php的cookie
+        			header(sprintf("Location: ../Home/%s", $_COOKIE["lastPage"]));      //抓到lastPage的cookie返回到指定位子
+        			setcookie("lastPage", "blog", time() - 3600,"/");                   //清除返回bolg.php的cookie
         		}
         		elseif(isset($_COOKIE["goiWantCar"])){
-        			header(sprintf("Location: ../Home/%s", $_COOKIE["goiWantCar"])); //抓到goiWantCar的cookie返回到指定位子
-        			setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600,"/"); //清除返回bolg.php的cookie
+        			header(sprintf("Location: ../Home/%s", $_COOKIE["goiWantCar"]));    //抓到goiWantCar的cookie返回到指定位子
+        			setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600,"/");   //清除返回rentalCar_iwantCar.php的cookie
         		}
         		else
-        		    header("Location: ../Home/index");
-        		  //$this->view("index");
+        		    header("Location: ../Home/index");                                  //清除返回bolg.php的cookie
         	    exit();
         	}
         	else
-        		echo "<script language='javascript'> alert('帳號密碼錯誤');</script>";
-        		$this->view("member",$data);  //將寫過的資料保留存回登入頁
-        		
+        		echo "<script language='javascript'> alert('帳號密碼錯誤');</script>";  //跳窗顯示帳號密碼錯誤
+        		$this->view("member",$data);                                            //將寫過的資料保留存回登入頁
     	}
 		else
-		echo "<script language='javascript'> alert('請輸入正確帳號密碼');</script>";
-		$this->view("member",$data);  //將寫過的資料保留存回登入頁
+		echo "<script language='javascript'> alert('請輸入正確帳號密碼');</script>";    //跳窗顯示帳號密碼錯誤
+		$this->view("member",$data);                                                    //將寫過的資料保留存回登入頁
 
     } ///////////////////  login() 結束
     
@@ -285,9 +280,9 @@ class HomeController extends Controller {
         {
             $registerID = $this->model("crud");
             $register = $this->model("crud");
-            
+        
         	$data[1] = $MemberID = $_POST['newMemberID'];
-        	 $MemberPW = $_POST['newMemberPW'];
+        	$MemberPW = $_POST['newMemberPW'];
         	$data[2] = $MemberTEL = $_POST['newMemberTEL'];
         	$data[3] = $MemberEM = $_POST['newMemberEM'];
         	$data[4] = $MemberBD = $_POST['newMemberBD'];
