@@ -1,12 +1,4 @@
 <?php
-
-if (isset($_COOKIE["userName"])){
-	$sUserName = $_COOKIE["userName"];
-	}
-else{ 
-	  $sUserName = "Guest";
-	 }
-
 switch($_POST['address']){
         		case '1' :
         			$activeAll = active; 
@@ -107,10 +99,10 @@ google.maps.event.addDomListener(window, 'load', init_map(x,y,addName,adderss));
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact" class="active">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>

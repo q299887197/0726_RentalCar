@@ -1,10 +1,5 @@
 <?php
-if (isset($_COOKIE["userName"])){
-	$sUserName = $_COOKIE["userName"];
-	}
-else{ 
-	  $sUserName = "Guest";
-	 }
+
 // 設定進入blog.php給lastPage的cookie
 if(!isset($_COOKIE["userName"])){
   setcookie("lastPage","blog");
@@ -58,11 +53,11 @@ if(!isset($_COOKIE["userName"])){
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog" class="active">會員專區</a></li>
 								
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else:  ?>
 								
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								
 								<?php endif; ?>
 							</ul>
@@ -116,7 +111,7 @@ if(!isset($_COOKIE["userName"])){
                       <td width="100" align="center" bgcolor="#77FF00"><font color="#000000">車種</font></td>
                       <td width="100" align="center" bgcolor="#77FF00"><font color="#000000">車型</font></td>
                     </tr>
-                    <?php while($row = @mysql_fetch_row($data)): ?>
+                    <?php while($row = @mysql_fetch_row($data['record'])): ?>
                     
                     <tr>
                       <td width="135" valign="baseline"><input type="text" value="<?php echo $row[2] ?>" style= "color:#000000;width:135px" readonly  /></td> <!-- readonly為能讀不能編輯 -->

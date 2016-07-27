@@ -1,15 +1,3 @@
-<?php
-
-if (isset($_COOKIE["userName"])){            //登出裝置
-	$sUserName = $_COOKIE["userName"];
-}
-else{ 
-	  $sUserName = "Guest";
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,12 +15,7 @@ else{
 	 <style>
         html { height: 101%; }
     </style>
-	
-   <?PHP 
-        if(isset($data['msg'])){ 
-            echo "<srcipt>alert('".$data['msg']."');</srcipt>";
-        }
-   ?>
+
   </head>
   <body>
 	<header>		
@@ -59,10 +42,10 @@ else{
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar" class="active">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>

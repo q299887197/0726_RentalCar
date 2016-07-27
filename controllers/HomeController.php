@@ -1,34 +1,54 @@
 <?php
 
 class HomeController extends Controller {
+    
+    
+    ///=================================================================
+    ////  判斷目前登入還登出
+    ///=================================================================
+    function session_in_out(){
+        if (isset($_SESSION["userName"])){
+        	$sUserName = $_SESSION["userName"];
+        	}
+        else{ 
+        	  $sUserName = "Guest";
+            }
+            
+        $data = $sUserName;
+        return $data;
+    }
 
     
     ///=================================================================
     ////  首頁
     ///=================================================================
     function index() { 
-        $this->view("index");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("index",$data);
     }
     
     ///=================================================================
     ////  關於我們
     ///=================================================================    
     function about(){
-        $this->view("about");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("about",$data);
     }
     
     ///=================================================================
     ////  租車
     ///=================================================================
     function rentalCar(){
-        $this->view("rentalCar");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("rentalCar",$data);
     }
     
     ///=================================================================
     ////  租車內的 注意事項
     ///=================================================================
     function rentalCar_notice(){
-        $this->view("rentalCar_notice");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("rentalCar_notice",$data);
     }
     
     
@@ -36,18 +56,18 @@ class HomeController extends Controller {
     ////  租車內的 車款介紹
     ///=================================================================
     function showAllCar(){                   ///顯示所有車款
+        $data['sUserName'] = $this -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = "allCar";
         $data['cars'] = $shoeCar->showAllcar();
-        $data['msg'] = "顯示成功";
         $this->view("rentalCar_showCar", $data);
     }
     
     function showCar($class){               ///顯示小客車或者休旅車
+        $data['sUserName'] = $this -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = $class;
         $data['cars'] = $shoeCar->showCarByClass($class);
-        $data['msg'] = "顯示成功";
         $this->view("rentalCar_showCar", $data);
     }
         
@@ -56,14 +76,16 @@ class HomeController extends Controller {
     ////  租車內的 我要租車
     ///=================================================================
     function rentalCar_iwantCar(){
-        $this->view("rentalCar_iwantCar");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("rentalCar_iwantCar",$data);
     }
     
     function GOrentalCar(){              //rentalCar_iwantCar.php 租車頁確定送出租車動作
         if (isset($_POST["iwantCar"])) 
         {
+            $data['sUserName'] = $this -> session_in_out();
             $GOrentalCar = $this ->model("crud");
-    		$sUserName = $_COOKIE["userName"];
+    		$sUserName = $_SESSION["userName"];
             $getCar =  $_POST['getCar'];
             $backCar =  $_POST['backCar'];
             $data['carGoName'] = $carGoName =  $_POST['carGoName'];
@@ -112,17 +134,18 @@ class HomeController extends Controller {
     ////  服務據點
     ///=================================================================
     function contact(){
-        $this->view("contact");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("contact",$data);
     }
     
     ///=================================================================
     ////  會員專區
     ///=================================================================
     function blog(){
-        $sUserName = $_COOKIE["userName"];
+        $data['sUserName'] = $this -> session_in_out();
         $recordID = $this->model("crud");
         $display = $this->model("crud");
-        $sUserName = $_COOKIE["userName"];
+        $sUserName = $_SESSION["userName"];
         $result = $display->read_CarRecord($sUserName);
         $Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour"));
 
@@ -146,16 +169,16 @@ class HomeController extends Controller {
     ////  會員專區內的 會員資料顯示
     ///=================================================================
     function blog_change(){
-        $sUserName = $_COOKIE["userName"];
+        $data['sUserName'] = $this -> session_in_out();
+        $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
         $result = $display->read_change($sUserName);
         $row = mysql_fetch_row($result);
-        $data[1] = $row[1];
-        $data[2] = $row[2];
-        $data[3] = $row[3];
-        $data[4] = $row[4];
-        $data[5] = $row[5];
-        $data[6] = $row[6];
+        $data['memberID'] = $row[1];
+        $data['memberTEL'] = $row[3];
+        $data['memberEM'] = $row[4];
+        $data['memberBD'] = $row[5];
+        $data['memberDate'] = $row[6];
         $this->view("blog_change",$data);
     }
     
@@ -165,25 +188,25 @@ class HomeController extends Controller {
     ////  會員專區內的 會員資料內的 資料修改
     ///=================================================================
     function blog_change_write(){  //導頁到修改會員頁
-        $sUserName = $_COOKIE["userName"];
+        $data['sUserName'] = $this -> session_in_out();
+        $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
         $result = $display->read_change($sUserName);
         $row = mysql_fetch_row($result);
-        $data[1] = $row[1];
-        $data[2] = $row[2];
-        $data[3] = $row[3];
-        $data[4] = $row[4];
-        $data[5] = $row[5];
-        $data[6] = $row[6];
+        $data['memberID'] = $row[1];
+        $data['memberPW'] = $row[2];
+        $data['memberTEL'] = $row[3];
+        $data['memberEM'] = $row[4];
+        $data['memberBD'] = $row[5];
+        $data['memberDate'] = $row[6];
         $this->view("blog_change_write",$data);
     }
     
     function updata_blog(){         //修改會員資料送出後的資料庫update更新
-
     if (isset($_POST["OK"])) 
     { 
       $updataBlog = $this->model("crud");
-      $sUserName = $_COOKIE["userName"];
+      $sUserName = $_SESSION["userName"];
       $MemberPW = $_POST['newMemberPW'];
       $MemberPW2 = $_POST['newMemberPW2'];
       $MemberTEL = $_POST['newMemberTEL'];
@@ -211,9 +234,10 @@ class HomeController extends Controller {
     ////  會員專區內的 租車紀錄
     ///=================================================================
     function blog_record(){
-        $sUserName = $_COOKIE["userName"];
+        $data['sUserName'] = $this -> session_in_out();
+        $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
-        $data = $result = $display->read_CarRecord($sUserName);
+        $data['record'] = $display->read_CarRecord($sUserName);
         $this->view("blog_record",$data);
     }
     
@@ -222,12 +246,13 @@ class HomeController extends Controller {
     ////  會員登入
     ///=================================================================
     function member(){
-    $this->view("member");
+        $this->view("member");
     }
  
     function login(){                                                                   //member 會員頁面 登入動作動作
     if (isset($_POST["btnOK"])) 
     {
+        // session_start();
         $login = $this->model("login");                                                 //指定models資料夾內的login.php
         $data[1] = $sUserName = $_POST["txtUserName"];                                  //讀取輸入的帳號內容
     	$sUserPassword = $_POST["txtPassword"];                                         //讀取輸入的密碼內容
@@ -237,7 +262,8 @@ class HomeController extends Controller {
         	$row = @mysql_fetch_row($result);                                           // 將搜尋到的擺為陣列給$row
         	
         	if($row[1] == $sUserName && $row[2] == $sUserPassword){                     // 比對帳號密碼是否相同
-        		setcookie("userName", $sUserName, time()  +9900, "/");                  // 正確給予相對應的cookie
+        	    $_SESSION["userName"]=$sUserName;                                       // 正確給予相對應的session
+
         		if (isset($_COOKIE["lastPage"])){
         			header(sprintf("Location: ../Home/%s", $_COOKIE["lastPage"]));      //抓到lastPage的cookie返回到指定位子
         			setcookie("lastPage", "blog", time() - 3600,"/");                   //清除返回bolg.php的cookie
@@ -247,7 +273,7 @@ class HomeController extends Controller {
         			setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600,"/");   //清除返回rentalCar_iwantCar.php的cookie
         		}
         		else
-        		    header("Location: ../Home/index");                                  //清除返回bolg.php的cookie
+        		    header("Location: ../Home/index");                                  //都沒有則導回首頁
         	    exit();
         	}
         	else
@@ -272,30 +298,31 @@ class HomeController extends Controller {
     ////  會員註冊
     ///=================================================================
     function newMember(){
-        $this->view("newMember");
+        $data['sUserName'] = $this -> session_in_out();
+        $this->view("newMember",$data);
     }
     
     function register(){            //註冊頁面按下註冊紐觸發事件
         if (isset($_POST["register"])) 
         {
+            $data['sUserName'] = $this -> session_in_out();
             $registerID = $this->model("crud");
             $register = $this->model("crud");
         
-        	$data[1] = $MemberID = $_POST['newMemberID'];
+        	$data['$MemberID'] = $_POST['newMemberID'];
         	$MemberPW = $_POST['newMemberPW'];
-        	$data[2] = $MemberTEL = $_POST['newMemberTEL'];
-        	$data[3] = $MemberEM = $_POST['newMemberEM'];
-        	$data[4] = $MemberBD = $_POST['newMemberBD'];
+        	$data['$MemberTEL'] = $_POST['newMemberTEL'];
+        	$data['$MemberEM']  = $_POST['newMemberEM'];
+        	$data['$MemberBD']  = $_POST['newMemberBD'];
         	$Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour"));
-        	if($MemberID != null && $MemberPW != null && $MemberTEL != null && $MemberEM != null && $MemberBD != null ){ //不能為空值
-            	$result = $registerID -> read_register($MemberID);		
+        	if($data['$MemberID'] != null && $MemberPW != null && $data['$MemberTEL'] != null && $data['$MemberEM'] != null && $data['$MemberBD'] != null ){ //不能為空值
+            	$result = $registerID -> read_register($data['$MemberID']);		
             	$row = @mysql_fetch_row($result);
             	if ( $row[1] == $id)  //比對帳號是否有相同重複
             	{
                 	if($_POST['newMemberPW'] == $_POST['newMemberPW2']){ //驗證密碼是否兩次都相同
-                	  $register -> create_register($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date);
-                	  setcookie("nweMember");
-                	  header("location: ../Home/index"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
+                	  $register -> create_register($data['$MemberID'],$MemberPW,$data['$MemberTEL'],$data['$MemberEM'],$data['$MemberBD'],$Date);
+                	  echo "<script language='javascript'> alert('註冊成功,請重新登入');location.href='../Home/index'; </script>"; //轉址, 註冊完成導回首頁
                 	  exit();
                 	}
                 	else{

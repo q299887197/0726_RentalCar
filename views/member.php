@@ -1,10 +1,12 @@
 <?php
+
 if (isset($_GET["logout"])) //作為登出使用 清除cookie
 {
-	setcookie("userName", "Guest", time() - 3600, "/");
+	unset($_SESSION['userName']);
 	header("Location: member");
 	exit();
 }
+
 
 if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此頁並傳來pleaseLogin的COOKIE
   echo "<script language='javascript'>alert('請先登入,才能進入唷');</script>";

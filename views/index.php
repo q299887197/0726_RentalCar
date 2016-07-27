@@ -1,19 +1,3 @@
-<?php
-
-if (isset($_COOKIE["userName"])){
-	$sUserName = $_COOKIE["userName"];
-	}
-else{ 
-	  $sUserName = "Guest";
-	 }
-
-if(isset($_COOKIE["nweMember"])){
-  echo "<script language='javascript'>alert('註冊成功,請重新登入');</script>";
-  setcookie("nweMember", "", time() - 3600);
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -55,10 +39,10 @@ if(isset($_COOKIE["nweMember"])){
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								<?php endif; ?>
 							</ul>
 						</div>

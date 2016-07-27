@@ -1,13 +1,6 @@
 <?php
-if (isset($_COOKIE["userName"])){  //會員登出裝置
-	$sUserName = $_COOKIE["userName"];
-	}
-else{ 
-	  $sUserName = "Guest";
-	 }
-	 
 // 設定進入rentalCar_iwantCar.php給goiWantCar的cookie
-if(!isset($_COOKIE["userName"])){
+if(!isset($_SESSION["userName"])){
   setcookie("goiWantCar","rentalCar_iwantCar",time() + 300, "/");
   setcookie("lastPage", "blog", time() - 3600,"/"); //清除返回bolg.php的cookie
   setcookie("pleaseLogin"); //給 pleaseLogin的cookie要給member顯示
@@ -102,10 +95,10 @@ if(!isset($_COOKIE["userName"])){
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar" class="active">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else: ?>
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								<?php endif; ?>							
 							</ul>
 						</div>

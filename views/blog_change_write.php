@@ -1,11 +1,4 @@
 <?php
-if (isset($_COOKIE["userName"])){
-	$sUserName = $_COOKIE["userName"];
-	}
-else{ 
-	  $sUserName = "Guest";
-	 }
-
 // 設定進入blog.php給lastPage的cookie
 if(!isset($_COOKIE["userName"])){
   setcookie("lastPage","blog");
@@ -13,7 +6,6 @@ if(!isset($_COOKIE["userName"])){
   header("location: member"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
   exit();
 }
-
 ?>
 
 
@@ -59,10 +51,10 @@ if(!isset($_COOKIE["userName"])){
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog" class="active">會員專區</a></li>
 								
-								<?php if ($sUserName == "Guest"): ?>
+								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else:  ?>
-								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?php echo $sUserName ?>_登出</a></li>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
 								<?php endif; ?>
 							</ul>
 						</div>
@@ -108,31 +100,31 @@ if(!isset($_COOKIE["userName"])){
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" value="<?php echo $data[1] ?>" style= "color:#000000" readonly  /></td> <!-- readonly為能讀不能編輯 -->
+                      <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" value="<?= $data['memberID'] ?>" style= "color:#000000" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">*密碼</font></td>
-                      <td valign="baseline"><input type="password" name="newMemberPW" id="newMemberPW" value="<?php echo $data[2] ?>" style= "color:#000000" /></td>
+                      <td valign="baseline"><input type="password" name="newMemberPW" id="newMemberPW" value="<?= $data['memberPW'] ?>" style= "color:#000000" /></td>
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">*密碼確認</font></td>
-                      <td valign="baseline"><input type="password" name="newMemberPW2" id="newMemberPW2" value="<?php echo $data[2] ?>" style= "color:#000000" /></td>
+                      <td valign="baseline"><input type="password" name="newMemberPW2" id="newMemberPW2" value="<?= $data['memberPW'] ?>" style= "color:#000000" /></td>
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">*電話</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?php echo $data[3] ?>" style= "color:#000000" /></td>
+                      <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?= $data['memberTEL'] ?>" style= "color:#000000" /></td>
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">*信箱</font></td>
-                      <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?php echo $data[4] ?>" style= "color:#000000" /></td>
+                      <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?= $data['memberEM'] ?>" style= "color:#000000" /></td>
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">生日</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?php echo $data[5] ?>" maxlength="4" style= "color:#000000" readonly /></td>
+                      <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?= $data['memberBD'] ?>" maxlength="4" style= "color:#000000" readonly /></td>
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">註冊時間</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberDate" id="newMemberDate" value="<?php echo $data[6] ?>" maxlength="4" style= "color:#000000" readonly /></td><!-- readonly為能讀不能編輯 -->
+                      <td valign="baseline"><input type="text" name="newMemberDate" id="newMemberDate" value="<?= $data['memberDate'] ?>" maxlength="4" style= "color:#000000" readonly /></td><!-- readonly為能讀不能編輯 -->
                     </tr>
                     <tr>
                       <td colspan="2" align="center" valign="baseline"><font color="#000000"><span style="color:red;">有標示  *  才可以更改</span></td></font></td>

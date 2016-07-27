@@ -39,7 +39,11 @@
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog">會員專區</a></li>
-								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>							
+								<?php if ($data['sUserName'] == "Guest"): ?>
+								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
+								<?php else: ?>
+								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
+								<?php endif; ?>								
 							</ul>
 						</div>
 					</div>						
@@ -70,7 +74,7 @@
                 </tr>
                 <tr>
                   <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                  <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" maxlength="20" value="<?= $data[1] ?>" placeholder="請輸入帳號" style= "color:#000000" /></td>
+                  <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" maxlength="20" value="<?= $data['$MemberID'] ?>" placeholder="請輸入帳號" style= "color:#000000" /></td>
                 </tr>
                 <tr>
                   <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>
@@ -82,15 +86,15 @@
                 </tr>
                 <tr>
                   <td width="80" align="center" valign="baseline"><font color="#000000">電話</font></td>
-                  <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?= $data[2] ?>" placeholder="請輸入電話" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/></td>
+                  <td valign="baseline"><input type="text" name="newMemberTEL" id="newMemberTEL" value="<?= $data['$MemberTEL'] ?>" placeholder="請輸入電話" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/></td>
                 </tr>
                 <tr>
                   <td width="80" align="center" valign="baseline"><font color="#000000">信箱</font></td>
-                  <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?= $data[3] ?>" placeholder="請輸入信箱" style= "color:#000000" /></td>
+                  <td valign="baseline"><input type="email" name="newMemberEM" id="newMemberEM" value="<?= $data['$MemberEM'] ?>" placeholder="請輸入信箱" style= "color:#000000" /></td>
                 </tr>
                 <tr>
                   <td width="80" align="center" valign="baseline"><font color="#000000">生日</font></td>
-                  <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?= $data[4] ?>" placeholder="請輸入生日" maxlength="4" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/><P>例如: 生日為8月16日，請輸入0816</P></td>
+                  <td valign="baseline"><input type="text" name="newMemberBD" id="newMemberBD" value="<?= $data['$MemberBD'] ?>" placeholder="請輸入生日" maxlength="4" style= "color:#000000" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d]/g,'')"/><P>例如: 生日為8月16日，請輸入0816</P></td>
                 </tr>
                 
                 <tr>
