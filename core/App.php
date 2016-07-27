@@ -17,7 +17,7 @@ class App {
         $controller = new $controllerName;
         $methodName = isset($url[1]) ? $url[1] : "index";
         if (!method_exists($controller, $methodName)){
-            // echo "<script language='javascript'> location.href='Home/index'; </script>";
+            echo "<script language='javascript'> location.href='../Home/index'; </script>";
             return;
         }
         unset($url[0]); unset($url[1]);

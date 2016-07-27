@@ -1,6 +1,6 @@
 <?php
 // 設定進入blog.php給lastPage的cookie
-if(!isset($_COOKIE["userName"])){
+if(!isset($_SESSION["userName"])){
   setcookie("lastPage","blog",time() + 300, "/");
   setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600, "/");//清除返回rentalCar_iwantCar.php的cookie
   setcookie("pleaseLogin"); //給 pleaseLogin的cookie要給member顯示請先登入
@@ -51,13 +51,10 @@ if(!isset($_COOKIE["userName"])){
 								<li role="presentation"><a href="<?= $root ?>/Home/rentalCar">租車</a></li>								
 								<li role="presentation"><a href="<?= $root ?>/Home/contact">服務據點</a></li>
 								<li role="presentation"><a href="<?= $root ?>/Home/blog" class="active">會員專區</a></li>
-								
 								<?php if ($data['sUserName'] == "Guest"): ?>
 								<li role="presentation"><a href="<?= $root ?>/Home/member">會員登入</a></li>
 								<?php else:  ?>
-								
 								<li role="presentation"><a href="<?= $root ?>/Home/member?logout=1"><?= $data['sUserName'] ?>_登出</a></li>
-								
 								<?php endif; ?>
 							</ul>
 						</div>
