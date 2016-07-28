@@ -88,14 +88,14 @@ class HomeController extends Controller {
     		$sUserName = $_SESSION["userName"];
             $getCar =  $_POST['getCar'];
             $backCar =  $_POST['backCar'];
-            $data['carGoName'] = $carGoName =  $_POST['carGoName'];
-            $data['getDate'] = $getDate =  $_POST['getDate'];
-            $data['backDate'] = $backDate =  $_POST['backDate'];
+            $data['carGoName'] = $_POST['carGoName'];
+            $data['getDate'] =  $_POST['getDate'];
+            $data['backDate'] = $_POST['backDate'];
             $carSpecies = $_POST['carSpecies'];
             $carModel =  $_POST['carModel']; 
             $Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour")); //租車訂單時的時間
-            if($carGoName != null && $getCar != null && $backCar != null && $getDate != null && $backDate != null && $carSpecies != null  && $carModel != null ){ //內容不能為空值
-                if($Date<$getDate && $Date<$backDate && $getDate<$backDate){  //租車時間不可小於目前時間 還車時間不可小於租車時間
+            if($data['carGoName'] != null && $getCar != null && $backCar != null && $data['getDate'] != null && $data['backDate'] != null && $carSpecies != null  && $carModel != null ){ //內容不能為空值
+                if($Date<$data['getDate'] && $Date<$data['backDate'] && $data['getDate']<$data['backDate']){  //租車時間不可小於目前時間 還車時間不可小於租車時間
                       switch($carSpecies){
                        case '1' :
                         $carSpecies='小客車-豐田';
@@ -116,7 +116,7 @@ class HomeController extends Controller {
                         $carSpecies='休旅車-三菱';
                         break;
                       }
-                       $GOrentalCar -> create_iwantCar($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel);
+                       $GOrentalCar -> create_iwantCar($sUserName,$Date,$data['carGoName'],$getCar,$backCar,$data['getDate'],$data['backDate'],$carSpecies,$carModel);
                     		echo "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog'; </script>";
                 }
                 else 
@@ -321,7 +321,7 @@ class HomeController extends Controller {
             	if ( $row[1] == $id)  //比對帳號是否有相同重複
             	{
                 	if($_POST['newMemberPW'] == $_POST['newMemberPW2']){ //驗證密碼是否兩次都相同
-                	  $register -> create_register($data['$MemberID'],$MemberPW,$data['$MemberTEL'],$data['$MemberEM'],$data['$MemberBD'],$Date);
+                	  $register -> create_register_pdo($data['$MemberID'],$MemberPW,$data['$MemberTEL'],$data['$MemberEM'],$data['$MemberBD'],$Date);
                 	  echo "<script language='javascript'> alert('註冊成功,請重新登入');location.href='../Home/index'; </script>"; //轉址, 註冊完成導回首頁
                 	  exit();
                 	}

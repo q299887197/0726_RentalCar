@@ -1,4 +1,3 @@
-<meta charset="utf-8">
 <?php
 include_once 'dbconfig.php';
 
@@ -13,6 +12,17 @@ class CRUD
  {
   mysql_query( "INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
 									values ('$MemberID','$MemberPW','$MemberTEL','$MemberEM','$MemberBD','$Date')");
+ }
+ 
+ 
+  public function create_register_pdo($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
+ {
+  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+  $dbh->exec("SET CHARACTER SET utf8");
+  $result = $dbh->query("INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
+									values ('$MemberID','$MemberPW','$MemberTEL','$MemberEM','$MemberBD','$Date')");
+  $db = null;
+			return $result;			
  }
  
  ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,6 +40,18 @@ class CRUD
    $result = mysql_query("SELECT * FROM sql_RentalCar where memberID = '$sUserName'");
    return $result;
  }
+ 
+ //   public function read_change_pdo($sUserName) // 會員專區>會員資料 blog_change.php 還有_write用的查詢會員資料
+ // {
+    // $dbh = new PDO("mysql:host=localhost;dbname=class", "root", "password");
+    // $dbh->exec("SET CHARACTER SET utf8");
+    
+ //    $sth = $dbh->prepare("SELECT * FROM sql_RentalCar where memberID = :memberID");
+ //    $sth->bindParam(':memberID', $sUserName);
+ //    $sth->execute();
+    
+ //    return $sth->fetchAll();
+ // }
  
  ///////////////////////////////////////////////////////////////////////////////////////////////
  
