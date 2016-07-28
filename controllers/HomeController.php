@@ -2,27 +2,12 @@
 
 class HomeController extends Controller {
     
-    
-    ///=================================================================
-    ////  判斷目前登入還登出    ------移到models 內部 晚點做
-    ///=================================================================
-    function session_in_out(){
-        if (isset($_SESSION["userName"])){
-        	$sUserName = $_SESSION["userName"];
-        	}
-        else{ 
-        	  $sUserName = "Guest";
-            }
-
-        return $sUserName;
-    }
-
-    
     ///=================================================================
     ////  首頁
     ///=================================================================
     function index() { 
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("index",$data);
     }
     
@@ -30,7 +15,8 @@ class HomeController extends Controller {
     ////  關於我們
     ///=================================================================    
     function about(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("about",$data);
     }
     
@@ -38,7 +24,8 @@ class HomeController extends Controller {
     ////  租車
     ///=================================================================
     function rentalCar(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("rentalCar",$data);
     }
     
@@ -46,7 +33,8 @@ class HomeController extends Controller {
     ////  租車內的 注意事項
     ///=================================================================
     function rentalCar_notice(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("rentalCar_notice",$data);
     }
     
@@ -55,7 +43,8 @@ class HomeController extends Controller {
     ////  租車內的 車款介紹
     ///=================================================================
     function showAllCar(){                   ///顯示所有車款
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = "allCar";
         $data['cars'] = $shoeCar->showAllcar();
@@ -63,7 +52,8 @@ class HomeController extends Controller {
     }
     
     function showCar($class){               ///顯示小客車或者休旅車
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = $class;
         $data['cars'] = $shoeCar->showCarByClass($class);
@@ -75,14 +65,16 @@ class HomeController extends Controller {
     ////  租車內的 我要租車
     ///=================================================================
     function rentalCar_iwantCar(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("rentalCar_iwantCar",$data);
     }
     
     function GOrentalCar(){              //rentalCar_iwantCar.php 租車頁確定送出租車動作
         if (isset($_POST["iwantCar"])) 
         {
-            $data['sUserName'] = $this -> session_in_out();
+            $session = $this->model("session");
+            $data['sUserName'] = $session -> session_in_out();
             $GOrentalCar = $this ->model("crud");
     		$sUserName = $_SESSION["userName"];
             $getCar =  $_POST['getCar'];
@@ -133,7 +125,8 @@ class HomeController extends Controller {
     ////  服務據點
     ///=================================================================
     function contact(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("contact",$data);
     }
     
@@ -141,7 +134,8 @@ class HomeController extends Controller {
     ////  會員專區>>目前訂單
     ///=================================================================
     function blog(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $recordID = $this->model("crud");
         $display = $this->model("crud");
         $sUserName = $_SESSION["userName"];
@@ -168,11 +162,11 @@ class HomeController extends Controller {
     ////  會員專區內的 會員資料顯示
     ///=================================================================
     function blog_change(){
-        $data['sUserName'] = $this -> session_in_out();
-        $sUserName = $_SESSION["userName"];
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $display = $this->model("crud");
 
-        $result = $display->read_change_pdo($sUserName);
+        $result = $display->read_change_pdo($data['sUserName']);
         // $row = mysql_fetch_row($result);
         foreach ($result as $row) {
             $data['memberID'] = $row[1];
@@ -190,7 +184,8 @@ class HomeController extends Controller {
     ////  會員專區內的 會員資料內的 資料修改
     ///=================================================================
     function blog_change_write(){  //導頁到修改會員頁
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
         $result = $display->read_change_pdo($sUserName);
@@ -238,7 +233,8 @@ class HomeController extends Controller {
     ////  會員專區>>租車紀錄
     ///=================================================================
     function blog_record(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $display = $this->model("crud");
         $data['record'] = $display->read_CarRecord_pdo($data['sUserName']);
         
@@ -250,6 +246,8 @@ class HomeController extends Controller {
     ////  會員登入
     ///=================================================================
     function member(){
+        $logout = $this->model("login");
+        $logout->member_logout();
         $this->view("member");
     }
  
@@ -303,14 +301,16 @@ class HomeController extends Controller {
     ////  會員註冊
     ///=================================================================
     function newMember(){
-        $data['sUserName'] = $this -> session_in_out();
+        $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
         $this->view("newMember",$data);
     }
     
     function register(){            //註冊頁面按下註冊紐觸發事件
         if (isset($_POST["register"])) 
         {
-            $data['sUserName'] = $this -> session_in_out();
+            $session = $this->model("session");
+        $data['sUserName'] = $session -> session_in_out();
             $registerID = $this->model("crud");
             $register = $this->model("crud");
         

@@ -5,6 +5,7 @@ class Controller {
         require_once "../Company_oop_MVCtest/models/$model.php";
         return new $model ();
     }
+
     
     public function view($view, $data = Array()) {
         $root = '/Company_oop_MVCtest';     //位子重置
