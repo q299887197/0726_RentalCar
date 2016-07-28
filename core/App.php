@@ -3,7 +3,7 @@
 class App {
     
     public function __construct() {
-        session_start();
+        
 
         $url = $this->parseUrl();
         // var_dump($url);

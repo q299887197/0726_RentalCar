@@ -102,7 +102,7 @@ if(!isset($_SESSION["userName"])){
                       <td align="center" bgcolor="#77FF00"><font color="#000000">車型</font></td>
                       <td align="center" bgcolor="#77FF00"><font color="#000000">取消租車</font></td>
                     </tr>
-                    <?php while($row = @mysql_fetch_row($data['display'])){ 
+                    <?php foreach($data['display'] as $row){  
                     		if($row[6]>$data['getDate']){
                     ?>
                     <tr>

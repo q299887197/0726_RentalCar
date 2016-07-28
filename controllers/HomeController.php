@@ -4,7 +4,7 @@ class HomeController extends Controller {
     
     
     ///=================================================================
-    ////  判斷目前登入還登出
+    ////  判斷目前登入還登出    ------移到models 內部 晚點做
     ///=================================================================
     function session_in_out(){
         if (isset($_SESSION["userName"])){
@@ -13,9 +13,8 @@ class HomeController extends Controller {
         else{ 
         	  $sUserName = "Guest";
             }
-            
-        $data = $sUserName;
-        return $data;
+
+        return $sUserName;
     }
 
     
@@ -116,7 +115,7 @@ class HomeController extends Controller {
                         $carSpecies='休旅車-三菱';
                         break;
                       }
-                       $GOrentalCar -> create_iwantCar($sUserName,$Date,$data['carGoName'],$getCar,$backCar,$data['getDate'],$data['backDate'],$carSpecies,$carModel);
+                       $GOrentalCar -> create_iwantCar_pdo($sUserName,$Date,$data['carGoName'],$getCar,$backCar,$data['getDate'],$data['backDate'],$carSpecies,$carModel);
                     		echo "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog'; </script>";
                 }
                 else 
@@ -139,14 +138,14 @@ class HomeController extends Controller {
     }
     
     ///=================================================================
-    ////  會員專區
+    ////  會員專區>>目前訂單
     ///=================================================================
     function blog(){
         $data['sUserName'] = $this -> session_in_out();
         $recordID = $this->model("crud");
         $display = $this->model("crud");
         $sUserName = $_SESSION["userName"];
-        $result = $display->read_CarRecord($sUserName);
+        $result = $display->read_CarRecord_pdo($sUserName);
         $Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour"));
 
         $data['display'] = $result;
@@ -156,7 +155,7 @@ class HomeController extends Controller {
         
         if($_GET['id']){            //觸發租車刪除事件
         $id = $_GET["id"];
-        $recordID->delete_record($id);
+        $recordID->delete_record_pdo($id);
         if($result)                 //判斷是否正確執行
         echo "<script language='javascript'> alert('刪除成功');location.href='../Home/blog'; </script>";
         else
@@ -172,13 +171,16 @@ class HomeController extends Controller {
         $data['sUserName'] = $this -> session_in_out();
         $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
-        $result = $display->read_change($sUserName);
-        $row = mysql_fetch_row($result);
-        $data['memberID'] = $row[1];
-        $data['memberTEL'] = $row[3];
-        $data['memberEM'] = $row[4];
-        $data['memberBD'] = $row[5];
-        $data['memberDate'] = $row[6];
+
+        $result = $display->read_change_pdo($sUserName);
+        // $row = mysql_fetch_row($result);
+        foreach ($result as $row) {
+            $data['memberID'] = $row[1];
+            $data['memberTEL'] = $row[3];
+            $data['memberEM'] = $row[4];
+            $data['memberBD'] = $row[5];
+            $data['memberDate'] = $row[6];
+        }
         $this->view("blog_change",$data);
     }
     
@@ -191,14 +193,16 @@ class HomeController extends Controller {
         $data['sUserName'] = $this -> session_in_out();
         $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
-        $result = $display->read_change($sUserName);
-        $row = mysql_fetch_row($result);
-        $data['memberID'] = $row[1];
-        $data['memberPW'] = $row[2];
-        $data['memberTEL'] = $row[3];
-        $data['memberEM'] = $row[4];
-        $data['memberBD'] = $row[5];
-        $data['memberDate'] = $row[6];
+        $result = $display->read_change_pdo($sUserName);
+        foreach($result as $row){
+            // $row = mysql_fetch_row($result);
+            $data['memberID'] = $row[1];
+            $data['memberPW'] = $row[2];
+            $data['memberTEL'] = $row[3];
+            $data['memberEM'] = $row[4];
+            $data['memberBD'] = $row[5];
+            $data['memberDate'] = $row[6];
+        }
         $this->view("blog_change_write",$data);
     }
     
@@ -214,7 +218,7 @@ class HomeController extends Controller {
       if($MemberPW != null && $MemberPW2 != null && $MemberTEL != null && $MemberEM != null ){ //不能為空值
           if($MemberPW == $MemberPW2){ //驗證密碼是否兩次都相同
           //更新資料庫資料語法
-          $updataBlog->update_blogWrite($MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$sUserName);
+          $updataBlog->update_blogWrite_pdo($MemberPW,$MemberTEL,$MemberEM,$sUserName);
           echo "<script language='javascript'> alert('修改完成!');location.href='../Home/blog_change'; </script>";
           }
           else
@@ -231,13 +235,13 @@ class HomeController extends Controller {
     }
     }
     ///=================================================================
-    ////  會員專區內的 租車紀錄
+    ////  會員專區>>租車紀錄
     ///=================================================================
     function blog_record(){
         $data['sUserName'] = $this -> session_in_out();
-        $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
-        $data['record'] = $display->read_CarRecord($sUserName);
+        $data['record'] = $display->read_CarRecord_pdo($data['sUserName']);
+        
         $this->view("blog_record",$data);
     }
     
@@ -252,14 +256,14 @@ class HomeController extends Controller {
     function login(){                                                                   //member 會員頁面 登入動作動作
     if (isset($_POST["btnOK"])) 
     {
-        // session_start();
         $login = $this->model("login");                                                 //指定models資料夾內的login.php
         $data[1] = $sUserName = $_POST["txtUserName"];                                  //讀取輸入的帳號內容
     	$sUserPassword = $_POST["txtPassword"];                                         //讀取輸入的密碼內容
     	
     	if($sUserName != null && $sUserPassword != null){                               // 帳號密碼不能為空直
         	$result = $login -> member_login($sUserName);	            //讀取sql_RentalCar資料庫的memberID  , 搜尋條件為 $MemberID
-        	$row = @mysql_fetch_row($result);                                           // 將搜尋到的擺為陣列給$row
+        // 	$row = @mysql_fetch_row($result);                                           // 將搜尋到的擺為陣列給$row
+        	foreach($result as $row){
         	
         	if($row[1] == $sUserName && $row[2] == $sUserPassword){                     // 比對帳號密碼是否相同
         	    $_SESSION["userName"]=$sUserName;                                       // 正確給予相對應的session
@@ -279,6 +283,7 @@ class HomeController extends Controller {
         	else
         		echo "<script language='javascript'> alert('帳號密碼錯誤');</script>";  //跳窗顯示帳號密碼錯誤
         		$this->view("member",$data);                                            //將寫過的資料保留存回登入頁
+    	}
     	}
 		else
 		echo "<script language='javascript'> alert('請輸入正確帳號密碼');</script>";    //跳窗顯示帳號密碼錯誤
@@ -316,8 +321,9 @@ class HomeController extends Controller {
         	$data['$MemberBD']  = $_POST['newMemberBD'];
         	$Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour"));
         	if($data['$MemberID'] != null && $MemberPW != null && $data['$MemberTEL'] != null && $data['$MemberEM'] != null && $data['$MemberBD'] != null ){ //不能為空值
-            	$result = $registerID -> read_register($data['$MemberID']);		
-            	$row = @mysql_fetch_row($result);
+            	$result = $registerID -> read_change_pdo($data['$MemberID']);
+            	foreach($result as $row);
+
             	if ( $row[1] == $id)  //比對帳號是否有相同重複
             	{
                 	if($_POST['newMemberPW'] == $_POST['newMemberPW2']){ //驗證密碼是否兩次都相同

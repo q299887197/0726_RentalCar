@@ -111,8 +111,8 @@ if(!isset($_SESSION["userName"])){
                       <td width="100" align="center" bgcolor="#77FF00"><font color="#000000">車種</font></td>
                       <td width="100" align="center" bgcolor="#77FF00"><font color="#000000">車型</font></td>
                     </tr>
-                    <?php while($row = @mysql_fetch_row($data['record'])): ?>
                     
+                    <?php foreach($data['record'] as $row){ ?>
                     <tr>
                       <td width="135" valign="baseline"><input type="text" value="<?php echo $row[2] ?>" style= "color:#000000;width:135px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                       <td width="50" valign="baseline"><input type="text"  value="<?php echo $row[3] ?>" style= "color:#000000;width:50px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
@@ -120,10 +120,10 @@ if(!isset($_SESSION["userName"])){
                       <td width="75" valign="baseline"><input type="text"  value="<?php echo $row[5] ?>" style= "color:#000000;width:75px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                       <td width="135" valign="baseline"><input type="text" value="<?php echo $row[6] ?>" style= "color:#000000;width:135px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                       <td width="135" valign="baseline"><input type="text" value="<?php echo $row[7] ?>" style= "color:#000000;width:135px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
-                      <td width="100" valign="baseline"><input type="text"  value="<?php echo $row[8] ?>" style= "color:#000000;width:100px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
-                      <td width="80" valign="baseline"><input type="text"  value="<?php echo $row[9] ?>" style= "color:#000000;width:100px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
+                      <td width="100" valign="baseline"><input type="text" value="<?php echo $row[8] ?>" style= "color:#000000;width:100px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
+                      <td width="100" valign="baseline"><input type="text" value="<?php echo $row[9] ?>" style= "color:#000000;width:100px" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                     </tr>
-					<?php endwhile;	?>
+					<?php } ?>
                   </table>
                 </form>
             	</div>

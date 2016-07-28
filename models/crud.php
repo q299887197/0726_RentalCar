@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <?php
 include_once 'dbconfig.php';
 
@@ -8,84 +9,129 @@ class CRUD
   $db = new DB_con();
  }
 
- public function create_register($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
+ 
+ ///=================================================================
+ ////  註冊頁newMember 新增會員資料進資料庫 INSERT
+ ///================================================================= 
+ public function create_register_pdo($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
  {
-  mysql_query( "INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
-									values ('$MemberID','$MemberPW','$MemberTEL','$MemberEM','$MemberBD','$Date')");
+   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+   $dbh->exec("SET CHARACTER SET utf8");
+   $dbh->query("SET NAMES utf8");
+   
+   $sth = $dbh->prepare("INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
+ 									values (?, ?, ?, ?, ?, ?)");
+   $sth->bindParam(1, $MemberID);
+   $sth->bindParam(2, $MemberPW);
+   $sth->bindParam(3, $MemberTEL);
+   $sth->bindParam(4, $MemberEM);
+   $sth->bindParam(5, $MemberBD);
+   $sth->bindParam(6, $Date);
+   $dbh = null;
+   return $sth->execute();			
  }
- 
- 
-  public function create_register_pdo($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
- {
-  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-  $dbh->exec("SET CHARACTER SET utf8");
-  $result = $dbh->query("INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
-									values ('$MemberID','$MemberPW','$MemberTEL','$MemberEM','$MemberBD','$Date')");
-  $db = null;
-			return $result;			
- }
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
-  public function read_register($MemberID) // 註冊頁newMember 查詢會員帳號
- {
-   $result = mysql_query("SELECT * FROM sql_RentalCar where memberID = '$MemberID'");
-   return $result;
- }
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
-  public function read_change($sUserName) // 會員專區>會員資料 blog_change.php 還有_write用的查詢會員資料
- {
-   $result = mysql_query("SELECT * FROM sql_RentalCar where memberID = '$sUserName'");
-   return $result;
- }
- 
- //   public function read_change_pdo($sUserName) // 會員專區>會員資料 blog_change.php 還有_write用的查詢會員資料
- // {
-    // $dbh = new PDO("mysql:host=localhost;dbname=class", "root", "password");
-    // $dbh->exec("SET CHARACTER SET utf8");
-    
- //    $sth = $dbh->prepare("SELECT * FROM sql_RentalCar where memberID = :memberID");
- //    $sth->bindParam(':memberID', $sUserName);
- //    $sth->execute();
-    
- //    return $sth->fetchAll();
- // }
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
-  public function create_iwantCar($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel) //我要租車資料庫
- {
-  mysql_query("INSERT INTO sql_carGo (userID,CarDate,carUesrName,getAddres,backAddres,getData,backData,species,model)
-      			values ('$sUserName','$Date','$carGoName','$getCar','$backCar','$getDate','$backDate','$carSpecies','$carModel')");
- }
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
- public function update_blogWrite($MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$sUserName) //bolg_change_write.php 修改update資料用
- {
-   mysql_query("update sql_RentalCar set memberPW='$MemberPW', memberTEL='$MemberTEL', memberEM='$MemberEM' where memberID='$sUserName'");
- }
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
- 
- 
- public function read_CarRecord($sUserName)  //bolg_record.php 查詢紀錄用
- {
-   $result = mysql_query("SELECT * FROM sql_carGo where userID = '$sUserName'");
-   return $result;
- }
- 
- 
- ///////////////////////////////////////////////////////////////////////////////////////////////
 
  
- public function delete_record($id)  //bolg.php 刪除訂單用的
+  ///=================================================================
+  ////  註冊頁 and 會員專區>會員資料 用的查詢會員資料 查詢會員帳號 SELECT
+  ///=================================================================
+ 
+  public function read_change_pdo($sUserName) // 註冊頁and會員專區>會員資料 用的查詢會員資料 查詢會員帳號
  {
-  $result = mysql_query("DELETE FROM sql_carGo WHERE id=".$id);
-  return $result;
+    $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+    $dbh->exec("SET CHARACTER SET utf8");
+    $dbh->query("SET NAMES utf8");
+    
+    $sth = $dbh->prepare("SELECT * FROM sql_RentalCar where memberID = :memberID");
+    $sth->bindParam(':memberID', $sUserName);
+    $sth->execute();
+    $dbh = null;
+    return $sth->fetchAll();
  }
+ 
+ 
+  ///=================================================================
+  ////  我要租車頁 新增資料庫  INSERT
+  ///=================================================================
+ 
+ public function create_iwantCar_pdo($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel) //我要租車資料庫
+ {
+   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar;charset=utf8", "root", "");
+   $dbh->query("SET CHARACTER SET utf8");
+   $dbh->query("SET NAMES utf8");
+   $sth = $dbh->prepare("INSERT INTO sql_carGo (userID,CarDate,carUesrName,getAddres,backAddres,getData,backData,species,model)
+       			values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+ 									
+   $sth->bindParam(1, $sUserName);
+   $sth->bindParam(2, $Date);
+   $sth->bindParam(3, $carGoName);
+   $sth->bindParam(4, $getCar);
+   $sth->bindParam(5, $backCar);
+   $sth->bindParam(6, $getDate);
+   $sth->bindParam(7, $backDate);
+   $sth->bindParam(8, $carSpecies);
+   $sth->bindParam(9, $carModel);
+   $dbh = null;
+   return $sth->execute();
+ }
+ 
+ 
+  ///=================================================================
+  ////  會員專區>會員資料>修改資料  資料更新 UPDATE
+  ///=================================================================
+  
+ public function update_blogWrite_pdo($MemberPW,$MemberTEL,$MemberEM,$sUserName) //bolg_change_write.php 修改update資料用
+ {
+   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+   $dbh->exec("SET CHARACTER SET utf8");
+   $dbh->query("SET NAMES utf8");
+   
+   $sth = $dbh->prepare("UPDATE sql_RentalCar SET memberPW= :memberPW , memberTEL= :memberTEL, memberEM= :memberEM where memberID= :memberID");
+   $sth->bindParam(':memberPW', $MemberPW);
+   $sth->bindParam(':memberTEL', $MemberTEL);
+   $sth->bindParam(':memberEM', $MemberEM);
+   $sth->bindParam(':memberID', $sUserName);
+ 
+   $dbh = null;
+   return $sth->execute();		
+ }
+ 
+
+  ///=================================================================
+  ////  會員專區>租車紀錄    查詢紀錄 SELECT
+  ///=================================================================
+  
+ public function read_CarRecord_pdo($sUserName)  //bolg_record.php 查詢紀錄用
+ {
+   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+   $dbh->exec("SET CHARACTER SET utf8");
+   $dbh->query("SET NAMES utf8");
+   
+   $sth = $dbh->prepare("SELECT * FROM sql_carGo where userID = :sUserName");
+   $sth->bindParam(':sUserName', $sUserName);
+   $sth->execute();
+   $dbh = null;
+   return $sth->fetchAll();
+ }
+ 
+  ///=================================================================
+  ////  會員專區>目前訂單    刪除訂單 DELETE
+  ///=================================================================
+
+
+ public function delete_record_pdo($id)  //bolg.php 刪除訂單用的
+ {
+  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
+   $dbh->exec("SET CHARACTER SET utf8");
+   $dbh->query("SET NAMES utf8");
+   
+   $sth = $dbh->prepare("DELETE FROM sql_carGo WHERE id= :carId ");
+   $sth->bindParam(':carId', $id);
+
+   $dbh = null;
+   return $sth->execute();	
+ }
+ 
  
  
 }
