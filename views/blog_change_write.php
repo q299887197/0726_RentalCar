@@ -6,6 +6,7 @@ if(!isset($_SESSION["userName"])){
   header("location: member"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
   exit();
 }
+echo $timeNO['alert'];
 ?>
 
 
@@ -100,7 +101,7 @@ if(!isset($_SESSION["userName"])){
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                      <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" value="<?= $data['memberID'] ?>" style= "color:#000000" readonly  /></td> <!-- readonly為能讀不能編輯 -->
+                      <td valign="baseline"><input type="text" name="newMemberID" id="newMemberID" value="<?= $data['sUserName'] ?>" style= "color:#000000" readonly  /></td> <!-- readonly為能讀不能編輯 -->
                     </tr>
                     <tr>
                       <td width="80" align="center" valign="baseline"><font color="#000000">*密碼</font></td>
@@ -139,8 +140,9 @@ if(!isset($_SESSION["userName"])){
                   </table>
                 </form>
                 </div>
-            	<br>
             </div>
+            <br>
+            <br>
         </center>
     </section><!--/#blog-->
 	

@@ -1,6 +1,6 @@
 
 <?php
-include_once 'testdb.php';
+require_once 'testdb.php';
 
 class CRUD
 {

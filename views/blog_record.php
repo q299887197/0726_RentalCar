@@ -127,8 +127,9 @@ if(!isset($_SESSION["userName"])){
                   </table>
                 </form>
             	</div>
-              <br>
             </div>
+            <br>
+            <br>
         </center>
     </section><!--/#blog-->
 	

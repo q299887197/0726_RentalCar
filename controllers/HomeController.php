@@ -11,6 +11,7 @@ class HomeController extends Controller {
         $this->view("index",$data);
     }
     
+    
     ///=================================================================
     ////  關於我們
     ///=================================================================    
@@ -20,6 +21,7 @@ class HomeController extends Controller {
         $this->view("about",$data);
     }
     
+    
     ///=================================================================
     ////  租車
     ///=================================================================
@@ -28,6 +30,7 @@ class HomeController extends Controller {
         $data['sUserName'] = $session -> session_in_out();
         $this->view("rentalCar",$data);
     }
+    
     
     ///=================================================================
     ////  租車內的 注意事項
@@ -47,7 +50,7 @@ class HomeController extends Controller {
         $data['sUserName'] = $session -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = "allCar";
-        $data['cars'] = $shoeCar->showAllcar();
+        $data['cars'] = $shoeCar->showAllcar_pdo();
         $this->view("rentalCar_showCar", $data);
     }
     
@@ -56,7 +59,7 @@ class HomeController extends Controller {
         $data['sUserName'] = $session -> session_in_out();
         $shoeCar=$this ->model("showCar");
         $data['active'] = $class;
-        $data['cars'] = $shoeCar->showCarByClass($class);
+        $data['cars'] = $shoeCar->showCarByClass_pdo($class);
         $this->view("rentalCar_showCar", $data);
     }
         
@@ -108,14 +111,15 @@ class HomeController extends Controller {
                         break;
                       }
                        $GOrentalCar -> create_iwantCar_pdo($sUserName,$Date,$data['carGoName'],$getCar,$backCar,$data['getDate'],$data['backDate'],$carSpecies,$carModel);
-                    		echo "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog'; </script>";
+                       $data['timeNO'] = "<script language='javascript'> alert('租車成功,服務員會與您聯絡唷!');location.href='../Home/blog'; </script>";
+                       $this->view("blog",$data);
                 }
                 else 
-                    echo "<script language='javascript'> alert('您輸入的時間有錯誤');</script>";
+                    $data['timeNO']="<script language='javascript'> alert('您輸入的時間有錯誤'); </script>";
                     $this->view("rentalCar_iwantCar",$data);  //將寫過的資料保留存回登入頁
             }
             else 
-                echo "<script language='javascript'> alert('請輸入完整資料');location.href='../Home/rentalCar_iwantCar'; </script>";
+                $data['timeNO']="<script language='javascript'> alert('請輸入完整資料'); </script>";
                 $this->view("rentalCar_iwantCar",$data);  //將寫過的資料保留存回登入頁
         }
     }
@@ -129,6 +133,7 @@ class HomeController extends Controller {
         $data['sUserName'] = $session -> session_in_out();
         $this->view("contact",$data);
     }
+    
     
     ///=================================================================
     ////  會員專區>>目前訂單
@@ -179,16 +184,15 @@ class HomeController extends Controller {
     }
     
     
-    
     ///=================================================================
     ////  會員專區內的 會員資料內的 資料修改
     ///=================================================================
     function blog_change_write(){  //導頁到修改會員頁
         $session = $this->model("session");
         $data['sUserName'] = $session -> session_in_out();
-        $sUserName = $_SESSION["userName"];
+        // $sUserName = $_SESSION["userName"];
         $display = $this->model("crud");
-        $result = $display->read_change_pdo($sUserName);
+        $result = $display->read_change_pdo($data['sUserName']);
         foreach($result as $row){
             // $row = mysql_fetch_row($result);
             $data['memberID'] = $row[1];
@@ -204,31 +208,40 @@ class HomeController extends Controller {
     function updata_blog(){         //修改會員資料送出後的資料庫update更新
     if (isset($_POST["OK"])) 
     { 
+      $session = $this->model("session");
       $updataBlog = $this->model("crud");
-      $sUserName = $_SESSION["userName"];
-      $MemberPW = $_POST['newMemberPW'];
+      $data['sUserName'] = $session -> session_in_out();
+      $data['memberPW'] = $_POST['newMemberPW'];
       $MemberPW2 = $_POST['newMemberPW2'];
-      $MemberTEL = $_POST['newMemberTEL'];
-      $MemberEM = $_POST['newMemberEM'];
-      if($MemberPW != null && $MemberPW2 != null && $MemberTEL != null && $MemberEM != null ){ //不能為空值
-          if($MemberPW == $MemberPW2){ //驗證密碼是否兩次都相同
+      $data['memberTEL'] = $_POST['newMemberTEL'];
+      $data['memberEM'] = $_POST['newMemberEM'];
+      $data['memberBD'] = $_POST['newMemberBD'];
+      $data['memberDate'] = $_POST['newMemberDate'];
+      if($data['memberPW'] != null && $MemberPW2 != null && $data['memberTEL'] != null && $data['memberEM'] != null ){ //不能為空值
+          if($data['memberPW'] == $MemberPW2){ //驗證密碼是否兩次都相同
           //更新資料庫資料語法
-          $updataBlog->update_blogWrite_pdo($MemberPW,$MemberTEL,$MemberEM,$sUserName);
-          echo "<script language='javascript'> alert('修改完成!');location.href='../Home/blog_change'; </script>";
+          $updataBlog->update_blogWrite_pdo($data['memberPW'],$data['memberTEL'],$data['memberEM'],$data['sUserName']);
+          $data['alert'] = "<script language='javascript'> alert('修改完成!'); </script>";
+          $this->view("blog_change",$data);
           }
           else
-           echo "<script language='javascript'> alert('密碼不一致');location.href='../Home/blog_change'; </script>";
+           $data['alert'] = "<script language='javascript'> alert('密碼不一致');; </script>";
+           $this->view("blog_change",$data);
           }
       else
-      	echo "<script language='javascript'> alert('請輸入完整資料');location.href='../Home/blog_change'; </script>";
+      	$data['alert'] = "<script language='javascript'> alert('請輸入完整資料'); </script>";
+      	$this->view("blog_change",$data);
         }
     
     
     if (isset($_POST["No"])) //修改會員資料頁面bolg_change_write.php按下取消返回會員資料頁 blog_change.php
     {
     	header("Location: ../Home/blog_change");
+    	exit();
     }
     }
+    
+    
     ///=================================================================
     ////  會員專區>>租車紀錄
     ///=================================================================

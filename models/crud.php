@@ -1,25 +1,18 @@
-<meta charset="utf-8">
 <?php
-include_once 'dbconfig.php';
+require_once 'PDOdb.php';
 
 class CRUD
 {
- public function __construct()
- {
-  $db = new DB_con();
- }
 
- 
  ///=================================================================
  ////  註冊頁newMember 新增會員資料進資料庫 INSERT
  ///================================================================= 
  public function create_register_pdo($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
  {
-   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-   $dbh->exec("SET CHARACTER SET utf8");
-   $dbh->query("SET NAMES utf8");
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
    
-   $sth = $dbh->prepare("INSERT INTO sql_RentalCar (memberID,memberPW,memberTEL,memberEM,memberBD,newMemberDate)
+   $sth = $dbh->prepare("INSERT INTO `sql_RentalCar` (`memberID`,`memberPW`,`memberTEL`,`memberEM`,`memberBD`,`newMemberDate`)
  									values (?, ?, ?, ?, ?, ?)");
    $sth->bindParam(1, $MemberID);
    $sth->bindParam(2, $MemberPW);
@@ -38,9 +31,8 @@ class CRUD
  
   public function read_change_pdo($sUserName) // 註冊頁and會員專區>會員資料 用的查詢會員資料 查詢會員帳號
  {
-    $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-    $dbh->exec("SET CHARACTER SET utf8");
-    $dbh->query("SET NAMES utf8");
+    $db_con = new DB_con();
+    $dbh = $db_con->db;
     
     $sth = $dbh->prepare("SELECT * FROM sql_RentalCar where memberID = :memberID");
     $sth->bindParam(':memberID', $sUserName);
@@ -56,12 +48,11 @@ class CRUD
  
  public function create_iwantCar_pdo($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel) //我要租車資料庫
  {
-   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar;charset=utf8", "root", "");
-   $dbh->query("SET CHARACTER SET utf8");
-   $dbh->query("SET NAMES utf8");
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
+   
    $sth = $dbh->prepare("INSERT INTO sql_carGo (userID,CarDate,carUesrName,getAddres,backAddres,getData,backData,species,model)
        			values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
- 									
    $sth->bindParam(1, $sUserName);
    $sth->bindParam(2, $Date);
    $sth->bindParam(3, $carGoName);
@@ -82,9 +73,9 @@ class CRUD
   
  public function update_blogWrite_pdo($MemberPW,$MemberTEL,$MemberEM,$sUserName) //bolg_change_write.php 修改update資料用
  {
-   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-   $dbh->exec("SET CHARACTER SET utf8");
-   $dbh->query("SET NAMES utf8");
+
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
    
    $sth = $dbh->prepare("UPDATE sql_RentalCar SET memberPW= :memberPW , memberTEL= :memberTEL, memberEM= :memberEM where memberID= :memberID");
    $sth->bindParam(':memberPW', $MemberPW);
@@ -103,9 +94,8 @@ class CRUD
   
  public function read_CarRecord_pdo($sUserName)  //bolg_record.php 查詢紀錄用
  {
-   $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-   $dbh->exec("SET CHARACTER SET utf8");
-   $dbh->query("SET NAMES utf8");
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
    
    $sth = $dbh->prepare("SELECT * FROM sql_carGo where userID = :sUserName");
    $sth->bindParam(':sUserName', $sUserName);
@@ -121,9 +111,8 @@ class CRUD
 
  public function delete_record_pdo($id)  //bolg.php 刪除訂單用的
  {
-  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-   $dbh->exec("SET CHARACTER SET utf8");
-   $dbh->query("SET NAMES utf8");
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
    
    $sth = $dbh->prepare("DELETE FROM sql_carGo WHERE id= :carId ");
    $sth->bindParam(':carId', $id);

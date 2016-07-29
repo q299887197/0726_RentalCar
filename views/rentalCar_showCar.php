@@ -109,7 +109,7 @@
                     <!--選擇圖片使用-->
                     <?php
                             //小客車smallCar 圖片 
-                            while($row = mysql_fetch_array( $data['cars'] )){
+                            foreach($data['cars'] as $row){
                                  VRcar($row[0],$row[2],$row[3],$row[4],$row[5],$row[6],$row[7],$row[8],$row[9],$row[10],$row[11], $row[12]);
                             }
                     ?>
