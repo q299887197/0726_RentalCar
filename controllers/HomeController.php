@@ -153,12 +153,15 @@ class HomeController extends Controller {
         $this->view("blog",$data);
         
         if($_GET['id']){            //觸發租車刪除事件
-        $id = $_GET["id"];
-        $recordID->delete_record_pdo($id);
-        if($result)                 //判斷是否正確執行
-        echo "<script language='javascript'> alert('刪除成功');location.href='../Home/blog'; </script>";
-        else
-        echo "<script language='javascript'> alert('刪除失敗');location.href='../Home/blog'; </script>";
+            $id = $_GET["id"];
+            $recordID->delete_record_pdo($id);
+            if($result){                 //判斷是否正確執行
+                header("Location: ../Home/blog");                                  //都沒有則導回首頁
+        	    exit();
+            }
+            else{
+            echo "<script language='javascript'> alert('刪除失敗');location.href='../Home/blog'; </script>";
+            }
         }
     }
     
@@ -270,37 +273,21 @@ class HomeController extends Controller {
         $login = $this->model("login");                                                 //指定models資料夾內的login.php
         $data[1] = $sUserName = $_POST["txtUserName"];                                  //讀取輸入的帳號內容
     	$sUserPassword = $_POST["txtPassword"];                                         //讀取輸入的密碼內容
-    	
-    	if($sUserName != null && $sUserPassword != null){                               // 帳號密碼不能為空直
-        	$result = $login -> member_login($sUserName);	            //讀取sql_RentalCar資料庫的memberID  , 搜尋條件為 $MemberID
-        // 	$row = @mysql_fetch_row($result);                                           // 將搜尋到的擺為陣列給$row
-        	foreach($result as $row){
-        	
-        	if($row[1] == $sUserName && $row[2] == $sUserPassword){                     // 比對帳號密碼是否相同
-        	    $_SESSION["userName"]=$sUserName;                                       // 正確給予相對應的session
+    	$result = $login -> member_login($sUserName,$sUserPassword);	            //讀取sql_RentalCar資料庫的memberID  , 搜尋條件為 $MemberID
+    	$data["alert"] = $result["alert"];
+    	$dataGo= $result["go"];
 
-        		if (isset($_COOKIE["lastPage"])){
-        			header(sprintf("Location: ../Home/%s", $_COOKIE["lastPage"]));      //抓到lastPage的cookie返回到指定位子
-        			setcookie("lastPage", "blog", time() - 3600,"/");                   //清除返回bolg.php的cookie
-        		}
-        		elseif(isset($_COOKIE["goiWantCar"])){
-        			header(sprintf("Location: ../Home/%s", $_COOKIE["goiWantCar"]));    //抓到goiWantCar的cookie返回到指定位子
-        			setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600,"/");   //清除返回rentalCar_iwantCar.php的cookie
-        		}
-        		else
-        		    header("Location: ../Home/index");                                  //都沒有則導回首頁
-        	    exit();
-        	}
-        	else
-        		echo "<script language='javascript'> alert('帳號密碼錯誤');</script>";  //跳窗顯示帳號密碼錯誤
-        		$this->view("member",$data);                                            //將寫過的資料保留存回登入頁
+    	if($result["login"]=="OK"){
+    	    header("Location: ../Home/$dataGo");
+    	    exit();
     	}
-    	}
-		else
-		echo "<script language='javascript'> alert('請輸入正確帳號密碼');</script>";    //跳窗顯示帳號密碼錯誤
-		$this->view("member",$data);                                                    //將寫過的資料保留存回登入頁
+    	elseif($result){
 
-    } ///////////////////  login() 結束
+    	    $this->view("$dataGo",$data);
+    	}
+
+    } ///////////////////  login() 結束束
+    
     
     if (isset($_POST["btnMember"])) //按下註冊鈕前往註冊頁面 newMember
     {

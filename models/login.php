@@ -13,18 +13,48 @@ class login {
     ////  會員登入    SELECT ------
     ///=================================================================
     
-    function member_login($sUserName) // 登入頁面 member.php 查詢帳號
+    function member_login($sUserName,$sUserPassword) // 登入頁面 member.php 查詢帳號
     {
-// 	  $result = mysql_query("SELECT * FROM sql_RentalCar where memberID = '$sUserName'");
-// 	  return $result;
-
 	  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
       $dbh->exec("SET CHARACTER SET utf8");
       $sth = $dbh->prepare("SELECT * FROM sql_RentalCar where memberID = :memberID");
       $sth->bindParam(':memberID', $sUserName);
       $sth->execute();
       $dbh = null;
-      return $sth->fetchAll();			
+      $result=array();
+      foreach (($sth->fetchAll()) as $row);
+      
+      
+      if($sUserName != null && $sUserPassword != null){                                 // 帳號密碼不能為空直
+        	if($row[1] == $sUserName && $row[2] == $sUserPassword){                     // 比對帳號密碼是否相同
+        	    $_SESSION["userName"]=$sUserName;                                       // 正確給予相對應的session
+        	    
+        	    if (isset($_COOKIE["lastPage"])){
+        			setcookie("lastPage", "blog", time() - 3600,"/");                   //清除返回bolg.php的cookie
+        			$result["login"]="OK";
+        			$result["go"] = "blog";
+        			return $result;
+        		}
+        		elseif(isset($_COOKIE["goiWantCar"])){
+        			setcookie("goiWantCar", "rentalCar_iwantCar", time() - 3600,"/");   //清除返回rentalCar_iwantCar.php的cookie
+        			$result["login"]="OK";
+        			$result["go"] = "rentalCar_iwantCar";
+        			return $result;
+        		}
+        		else
+        		    $result["login"]="OK";
+        		    $result["go"] = "index";
+        			return $result;                                                     //都沒有則導回首頁
+        	}
+        	else
+        	   $result["alert"] = "<script language='javascript'> alert('帳號密碼錯誤'); </script>";
+               $result["go"] = "member";
+               return $result;
+	 }
+	 else
+	   $result["alert"] = "<script language='javascript'> alert('請輸入正確帳號密碼'); </script>";
+       $result["go"] = "member";
+       return $result;
     }
     
     

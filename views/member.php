@@ -4,7 +4,7 @@ if(isset($_COOKIE["pleaseLogin"])){ //從 rentalCar_iwantCar.php被導往來此�
   echo "<script language='javascript'>alert('請先登入,才能進入唷');</script>";
   setcookie("pleaseLogin", "", time() - 3600); //上面顯示跳窗後清除 COOKIE
 }
-
+echo $data["alert"];
 
 ?>
 
