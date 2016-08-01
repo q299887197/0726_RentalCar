@@ -3,7 +3,7 @@ require_once("models/PDOdb.php");
 
 class showCar {
 
-    function showAllcar_pdo(){
+    function showAllcar_pdo(){          //顯示所有車種
         $db_con = new DB_con();
         $dbh = $db_con->db;
         
@@ -13,7 +13,7 @@ class showCar {
         return $sth->fetchAll();
     }
     
-    function showCarByClass_pdo($class){
+    function showCarByClass_pdo($class){    //顯示設定車種 (小客車, 休旅車)
         $db_con = new DB_con();
         $dbh = $db_con->db;
         

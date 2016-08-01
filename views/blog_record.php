@@ -1,16 +1,3 @@
-<?php
-
-// 設定進入blog.php給lastPage的cookie
-if(!isset($_SESSION["userName"])){
-  setcookie("lastPage","blog");
-  setcookie("pleaseLogin"); //給 pleaseLogin的cookie要給member顯示請先登入
-  header("location: member"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
-  exit();
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>

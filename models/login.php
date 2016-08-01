@@ -1,22 +1,17 @@
 <?php
-require_once("models/crud.php");
+require_once("models/PDOdb.php");
 
 class login {
-    public $crud;
-    
-    function __construct(){
-        $this-> crud = new CRUD(); 
-    }
-    
-    
+
     ///=================================================================
     ////  會員登入    SELECT ------
     ///=================================================================
     
     function member_login($sUserName,$sUserPassword) // 登入頁面 member.php 查詢帳號
     {
-	  $dbh = new PDO("mysql:host=localhost;dbname=RentalCar", "root", "");
-      $dbh->exec("SET CHARACTER SET utf8");
+	  $db_con = new DB_con();
+      $dbh = $db_con->db;
+      
       $sth = $dbh->prepare("SELECT * FROM `sql_RentalCar` WHERE `memberID` = :memberID");
       $sth->bindParam(':memberID', $sUserName);
       $sth->execute();
@@ -63,13 +58,19 @@ class login {
     ///=================================================================    
     
     function member_logout(){
-      if (isset($_GET["logout"])) //作為登出使用 清除cookie
+      if (isset($_GET["logout"]))       //作為登出使用 清除cookie
       {
-      	unset($_SESSION['userName']);
-      	header("Location: member");
-      	exit();
+      	 unset($_SESSION['userName']);
+      	 header("Location: member");
+      	 exit();
       }
-        
+      
+      if(isset($_COOKIE["pleaseLogin"])){       //被導往來此頁並傳來pleaseLogin的COOKIE
+         $data="<script language='javascript'>alert('請先登入,才能進入唷');</script>";
+         setcookie("pleaseLogin", "", time() - 3600);
+         return $data;
+      }
+    
     }
 
 }

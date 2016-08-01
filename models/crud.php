@@ -41,7 +41,7 @@ class CRUD
     return $sth->fetchAll();
  }
  
- public function read_change_pdo123($sUserName,$MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁and會員專區>會員資料 用的查詢會員資料 查詢會員帳號
+ public function read_change_pdo123($sUserName,$MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁用的 
  {
     $db_con = new DB_con();
     $dbh = $db_con->db;
@@ -191,12 +191,9 @@ class CRUD
    
    $sth = $dbh->prepare("DELETE FROM `sql_carGo` WHERE `id` = :carId ");
    $sth->bindParam(':carId', $id);
-
    $dbh = null;
+   
    return $sth->execute();	
  }
- 
- // https://c9.io/sherlockmax
- 
 }
 ?>

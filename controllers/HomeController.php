@@ -69,6 +69,7 @@ class HomeController extends Controller {
     ///=================================================================
     function rentalCar_iwantCar(){
         $session = $this->model("session");
+        $session -> cookieGoBlog("rentalCar_iwantCar");
         $data['sUserName'] = $session -> session_in_out();
         $this->view("rentalCar_iwantCar",$data);
     }
@@ -135,36 +136,31 @@ class HomeController extends Controller {
     
     
     ///=================================================================
-    ////  會員專區>>目前訂單     有問題無法即時顯示 等等要改
+    ////  會員專區>>目前訂單
     ///=================================================================
     function blog(){
         $session = $this->model("session");
+        $session -> cookieGoBlog("blog");
         $data['sUserName'] = $session -> session_in_out();
         $recordID = $this->model("crud");
         $display = $this->model("crud");
-        $result = $display->read_CarRecord_pdo($data['sUserName']);
+        $resultDS = $display->read_CarRecord_pdo($data['sUserName']);
         $Date = date("Y-m-d H:i:s",strtotime($time1."+8 hour"));
-
-        $data['display'] = $result;
+        $data['display'] = $resultDS;
         $data['getDate'] = $Date;
         
-        $this->view("blog",$data);
-        
-        if($_GET['id']){            //觸發租車刪除事件
- 
+        if($_GET["id"]){            //觸發租車刪除事件
             $result = $recordID->delete_record_pdo($_GET["id"]);
             if($result){                 //判斷是否正確執行
-                $data["alert"]="<script language='javascript'> alert('刪除成功'); </script>";
-                $this->view("blog",$data);
-            //     header("Location: ../Home/blog");                                  //都沒有則導回首頁
-        	   // exit();
+                header("Location: ../Home/blog");                                  //都沒有則導回首頁
+        	    exit();
             }
             else{
                 $data["alert"]="<script language='javascript'> alert('刪除失敗'); </script>";
                 $this->view("blog",$data);
-            // echo "<script language='javascript'> alert('刪除失敗');location.href='../Home/blog'; </script>";
             }
         }
+        $this->view("blog",$data);
     }
     
     
@@ -173,6 +169,7 @@ class HomeController extends Controller {
     ///=================================================================
     function blog_change(){
         $session = $this->model("session");
+        $session -> cookieGoBlog("blog");
         $data['sUserName'] = $session -> session_in_out();
         $display = $this->model("crud");
 
@@ -194,6 +191,7 @@ class HomeController extends Controller {
     ///=================================================================
     function blog_change_write(){  //導頁到修改會員頁
         $session = $this->model("session");
+        $session -> cookieGoBlog("blog");
         $data['sUserName'] = $session -> session_in_out();
         $display = $this->model("crud");
         $result = $display->read_change_pdo($data['sUserName']);
@@ -246,6 +244,7 @@ class HomeController extends Controller {
     ///=================================================================
     function blog_record(){
         $session = $this->model("session");
+        $session -> cookieGoBlog("blog");
         $data['sUserName'] = $session -> session_in_out();
         $display = $this->model("crud");
         $data['record'] = $display->read_CarRecord_pdo($data['sUserName']);
@@ -259,8 +258,8 @@ class HomeController extends Controller {
     ///=================================================================
     function member(){
         $logout = $this->model("login");
-        $logout->member_logout();
-        $this->view("member");
+        $data["alert"]=$logout->member_logout();
+        $this->view("member",$data);
     }
  
     function login(){                                                                   //member 會員頁面 登入動作動作

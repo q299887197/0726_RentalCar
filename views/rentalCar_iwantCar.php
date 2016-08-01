@@ -1,12 +1,4 @@
 <?php
-// 設定進入rentalCar_iwantCar.php給goiWantCar的cookie
-if(!isset($_SESSION["userName"])){
-  setcookie("goiWantCar","rentalCar_iwantCar",time() + 300, "/");
-  setcookie("lastPage", "blog", time() - 3600,"/"); //清除返回bolg.php的cookie
-  setcookie("pleaseLogin"); //給 pleaseLogin的cookie要給member顯示
-  header("location: member"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
-  exit();
-}
 echo $data['timeNO'];
 ?>
 
