@@ -7,7 +7,7 @@ class showCar {
         $db_con = new DB_con();
         $dbh = $db_con->db;
         
-        $sth = $dbh->prepare("SELECT * FROM sql_showCar");
+        $sth = $dbh->prepare("SELECT * FROM `sql_showCar`");
         $sth->execute();
         $dbh = null;
         return $sth->fetchAll();
@@ -17,7 +17,7 @@ class showCar {
         $db_con = new DB_con();
         $dbh = $db_con->db;
         
-        $sth = $dbh->prepare("SELECT * FROM sql_showCar where class = :class ");
+        $sth = $dbh->prepare("SELECT * FROM `sql_showCar` WHERE `class` = :class ");
         $sth->bindParam(':class', $class);
         $sth->execute();
         $dbh = null;

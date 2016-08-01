@@ -6,7 +6,7 @@ if(!isset($_SESSION["userName"])){
   header("location: member"); //轉址, 會員專區沒有登入cookie會被請到 member登入頁面
   exit();
 }
-echo $timeNO['alert'];
+echo $data["alert"];
 ?>
 
 

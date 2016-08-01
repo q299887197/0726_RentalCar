@@ -80,7 +80,7 @@ echo $data["alert"];
               </tr>
               <tr>
                 <td width="80" align="center" valign="baseline"><font color="#000000">帳號</font></td>
-                <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" value="<?= $data[1] ?>" style= "color:#000000" /></td>
+                <td valign="baseline"><input type="text" name="txtUserName" id="txtUserName" value="<?= $data["UserName"] ?>" style= "color:#000000" /></td>
               </tr>
               <tr>
                 <td width="80" align="center" valign="baseline"><font color="#000000">密碼</font></td>

@@ -1,3 +1,4 @@
+<?php echo $data["alert"]; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
