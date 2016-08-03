@@ -156,7 +156,7 @@ class HomeController extends Controller {
         	    exit();
             }
             else{
-                $data["alert"]="<script language='javascript'> alert('刪除失敗'); </script>";
+                $data["alert"]="刪除失敗";
                 $this->view("blog",$data);
             }
         }

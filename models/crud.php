@@ -3,19 +3,27 @@ require_once 'PDOdb.php';
 
 class CRUD
 {
+ var $dbh;
+ function __construct()
+ {
+   $db_con = new DB_con();
+   $dbh = $db_con->db;
+   $this-> dbh= $dbh;   
+   // 將內部的$dbh 指定給外面class的 var $dbh , 
+   // 外面其他function才可以使用,  變數 = $this->dbh
+ }
 
  ///=================================================================
  ////  註冊頁newMember 新增會員資料進資料庫 INSERT
  ///================================================================= 
  public function create_register_pdo($MemberID,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁newMember 新增會員資料進資料庫
  {
-   $db_con = new DB_con();
-   $dbh = $db_con->db;
    
+   $dbh = $this->dbh;
    $sth = $dbh->prepare("INSERT INTO `sql_RentalCar` (`memberID`,`memberPW`,`memberTEL`,`memberEM`,`memberBD`,`newMemberDate`)
- 									VALUES (?, ?, ?, ?, ?, ?)");
+ 									VALUES (?, ?, ?, :memberID, ?, ?)");
    $sth->bindParam(1, $MemberID);
-   $sth->bindParam(2, $MemberPW);
+   $sth->bindParam(":memberID", $MemberPW);
    $sth->bindParam(3, $MemberTEL);
    $sth->bindParam(4, $MemberEM);
    $sth->bindParam(5, $MemberBD);
@@ -31,9 +39,7 @@ class CRUD
  
   public function read_change_pdo($sUserName) // 註冊頁and會員專區>會員資料 用的查詢會員資料 查詢會員帳號
  {
-    $db_con = new DB_con();
-    $dbh = $db_con->db;
-    
+    $dbh = $this->dbh;
     $sth = $dbh->prepare("SELECT * FROM `sql_RentalCar` WHERE `memberID` = :memberID");
     $sth->bindParam(':memberID', $sUserName);
     $sth->execute();
@@ -43,9 +49,7 @@ class CRUD
  
  public function read_change_pdo123($sUserName,$MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$MemberBD,$Date) // 註冊頁用的 
  {
-    $db_con = new DB_con();
-    $dbh = $db_con->db;
-    
+    $dbh = $this->dbh;
     $sth = $dbh->prepare("SELECT * FROM `sql_RentalCar` WHERE `memberID` = :memberID");
     $sth->bindParam(':memberID', $sUserName);
     $sth->execute();
@@ -59,26 +63,25 @@ class CRUD
             	{
                 	if($MemberPW == $MemberPW2){ //驗證密碼是否兩次都相同
                 	  $this -> create_register_pdo($sUserName,$MemberPW,$MemberTEL,$MemberEM,$MemberBD,$Date);
-                	  // echo "<script language='javascript'> alert('註冊成功,請重新登入');location.href='../Home/index'; </script>"; //轉址, 註冊完成導回首頁
                 	  $result["login"]="OK";
-                	  $result["alert"] = "<script language='javascript'> alert('註冊成功,請重新登入'); </script>";
+                	  $result["alert"] = "註冊成功,請重新登入";
         			        $result["go"] = "index";
                 	  return $result;
                 	}
                 	else{
-                		 $result["alert"] = "<script language='javascript'> alert('密碼輸入不一致'); </script>";
+                		 $result["alert"] = "密碼輸入不一致";
                    $result["go"] = "newMember";
                    return $result;
                 	}
             	}
             	else{
-            		$result["alert"] = "<script language='javascript'> alert('此帳號使用過了'); </script>";
+            		$result["alert"] = "此帳號使用過了";
               $result["go"] = "newMember";
               return $result;
             	}
         	}
         	else{
-        		$result["alert"] = "<script language='javascript'> alert('請輸入完整資料'); </script>";
+        		$result["alert"] = "請輸入完整資料";
           $result["go"] = "newMember";
           return $result;
         	}
@@ -91,9 +94,7 @@ class CRUD
  
  public function create_iwantCar_pdo($sUserName,$Date,$carGoName,$getCar,$backCar,$getDate,$backDate,$carSpecies,$carModel) //我要租車資料庫
  {
-   $db_con = new DB_con();
-   $dbh = $db_con->db;
-   
+   $dbh = $this->dbh;
    $sth = $dbh->prepare("INSERT INTO `sql_carGo` (`userID`,`CarDate`,`carUesrName`,`getAddres`,`backAddres`,`getData`,`backData`,`species`,`model`)
        			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
    $sth->bindParam(1, $sUserName);
@@ -131,10 +132,7 @@ class CRUD
  
  public function update_blogWrite_pdo123($MemberPW,$MemberPW2,$MemberTEL,$MemberEM,$sUserName) //bolg_change_write.php 修改update資料用
  {
-   $db_con = new DB_con();
-   $dbh = $db_con->db;
-   
-
+   $dbh = $this->dbh;
    if($MemberPW != null && $MemberPW2 != null && $MemberTEL != null && $MemberEM != null ){ //不能為空值
           if($MemberPW == $MemberPW2){                                                      //驗證密碼是否兩次都相同
           $sth = $dbh->prepare("UPDATE `sql_RentalCar` SET `memberPW` = :memberPW , `memberTEL` = :memberTEL, `memberEM` = :memberEM WHERE `memberID`= :memberID");
@@ -146,17 +144,17 @@ class CRUD
           
           $result["result"] = $sth->execute();		
           $result["login"]="OK";
-          $result["alert"] = "<script language='javascript'> alert('修改完成!'); </script>";
+          $result["alert"] = "修改完成!";
           $result["go"] = "blog_change";
           return $result;
           }
           else
-           $result["alert"] = "<script language='javascript'> alert('密碼不一致'); </script>";
+           $result["alert"] = "密碼不一致";
            $result["go"] = "blog_change_write";
            return $result;
           }
       else
-      	$result["alert"] = "<script language='javascript'> alert('請輸入完整資料'); </script>";
+      	$result["alert"] = "請輸入完整資料";
        $result["go"] = "blog_change_write";
        return $result;
         
@@ -169,9 +167,7 @@ class CRUD
   
  public function read_CarRecord_pdo($sUserName)  //bolg_record.php 查詢紀錄用
  {
-   $db_con = new DB_con();
-   $dbh = $db_con->db;
-   
+   $dbh = $this->dbh;
    $sth = $dbh->prepare("SELECT * FROM `sql_carGo` WHERE `userID` = :sUserName");
    $sth->bindParam(':sUserName', $sUserName);
    $sth->execute();
@@ -186,9 +182,7 @@ class CRUD
 
  public function delete_record_pdo($id)  //bolg.php 刪除訂單用的
  {
-   $db_con = new DB_con();
-   $dbh = $db_con->db;
-   
+   $dbh = $this->dbh;
    $sth = $dbh->prepare("DELETE FROM `sql_carGo` WHERE `id` = :carId ");
    $sth->bindParam(':carId', $id);
    $dbh = null;
